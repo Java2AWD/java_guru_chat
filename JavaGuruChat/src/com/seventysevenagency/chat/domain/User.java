@@ -1,58 +1,58 @@
 package com.seventysevenagency.chat.domain;
 
 public class User {
-	private int id;
-	private String name;
-	private String surname;
-	private String username;
-	private String password;
-	private String email;
+	private int mId;
+	private String mName;
+	private String mSurname;
+	private String mUsername;
+	private String mPassword;
+	private String mEmail;
 
 	public int getId() {
-		return id;
+		return mId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.mId = id;
 	}
 
 	public String getName() {
-		return name;
+		return mName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.mName = name;
 	}
 
 	public String getSurname() {
-		return surname;
+		return mSurname;
 	}
 
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.mSurname = surname;
 	}
 
 	public String getUsername() {
-		return username;
+		return mUsername;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.mUsername = username;
 	}
 
 	public String getPassword() {
-		return password;
+		return mPassword;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.mPassword = password;
 	}
 
 	public String getEmail() {
-		return email;
+		return mEmail;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.mEmail = email;
 	}
 }
