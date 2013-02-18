@@ -3,13 +3,11 @@ package com.seventysevenagency.chat.dao;
 import com.seventysevenagency.chat.domain.User;
 
 public interface UserDAO {
-	public void create(User user);
+	public void create(User user) throws DAOException;
 
-	public void update(User user);
+	public void update(User user) throws DAOException;
 
-	public void find(int id);
+	public User find(int id) throws DAOException;
 
-	public void delete(User user);
-
-	public void deleteById(int id);
+	public void deleteById(int id) throws DAOException;
 }
