@@ -28,9 +28,9 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
+		} finally {
+			closeConnection(connection);
 		}
-
-		closeConnection(connection);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
+		} finally {
+			closeConnection(connection);
 		}
-
-		closeConnection(connection);
 	}
 
 	@Override
@@ -80,9 +80,10 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 
 		} catch (SQLException e) {
 			throw new DAOException(e);
+		} finally {
+			closeConnection(connection);
 		}
 
-		closeConnection(connection);
 		return user;
 	}
 
@@ -97,9 +98,9 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
+		} finally {
+			closeConnection(connection);
 		}
-
-		closeConnection(connection);
 	}
 
 }
