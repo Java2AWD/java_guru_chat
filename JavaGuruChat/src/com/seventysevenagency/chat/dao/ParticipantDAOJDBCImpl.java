@@ -6,20 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.seventysevenagency.chat.domain.Conversation;
+import com.seventysevenagency.chat.domain.Participant;
 import com.seventysevenagency.chat.types.ConversationType.Type;
 
-public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO {
-
-	@Override
-	public void create(Conversation conversation) throws DAOException {
+public class ParticipantDAOJDBCImpl extends BaseDAO implements ParticipantDAO {
+	public void create(Participant participant) throws DAOException {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("INSERT INTO convesation "
-							+ "(type, name)" + " VALUES (?, ?);");
+					.prepareStatement("INSERT INTO partiticant "
+							+ "(user_id, conversation_id)" + " VALUES (?, ?);");
 
-			stm.setString(1, String.valueOf(conversation.getType()));
-			stm.setString(2, conversation.getName());
+			stm.setLong(1, participant.getUserId());
+			stm.setLong(2, participant.getConversationId());
 
 			stm.execute();
 		} catch (SQLException e) {
@@ -29,15 +28,15 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		}
 	}
 
-	@Override
 	public void delete(Long id) throws DAOException {
-		// TODO Auto-generated method stub
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("DELETE FROM conversation WHERE id = ?");
+					.prepareStatement("DELETE FROM partiticant "
+							+ "WHERE id = ? ");
 
 			stm.setLong(1, id);
+
 			stm.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
@@ -46,24 +45,21 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		}
 	}
 
-	public Conversation select(Long id) throws DAOException {
-		// TODO Auto-generated method stub
+	public Participant select(Long id) throws DAOException {
 		Connection connection = this.getConnection();
-
-		Conversation conversation = null;
+		Participant participant = null;
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("SELECT name, type "
-							+ "FROM conversation WHERE id = ?");
+					.prepareStatement("SELECT (user_id, conversation_id) FROM partiticant "
+							+  "WHERE id = ? ");
 
 			stm.setLong(1, id);
-
 			ResultSet result = stm.executeQuery();
-			conversation = new Conversation();
-			conversation.setId(id);
-			conversation.setName(result.getString(1));
-			conversation.setType(Type.valueOf(result.getString(2)));
-			return conversation;
+			participant = new Participant();
+			participant.setId(id);
+			participant.setUserId(result.getLong(1));
+			participant.setConversationId(result.getLong(2));
+			return participant;
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
@@ -71,18 +67,16 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		}
 	}
 
-	@Override
-	public void update(Conversation conversation) throws DAOException {
-		// TODO Auto-generated method stub
+	public void update(Participant participant) throws DAOException {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("UPDATE convesation SET name = ?,"
-							+ "type = ?" + "WHERE id = ?");
+					.prepareStatement("UPDATE participant SET user_id = ? AND"
+							+ "conversation_id = ?" + "WHERE id = ?");
 
-			stm.setString(1, String.valueOf(conversation.getType()));
-			stm.setString(2, conversation.getName());
-			stm.setLong(3, conversation.getId());
+			stm.setLong(1, participant.getUserId()));
+			stm.setLong(2, participant.getConversationId());
+			stm.setLong(3, participant.getId());
 			stm.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
@@ -90,5 +84,4 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 			closeConnection(connection);
 		}
 	}
-
 }
