@@ -5,18 +5,18 @@
 <hibernate-mapping>
     <class name="com.seventysevenagency.chat.domain.Conversation" table="CONVERSATION">
         <id name="mId" type="java.lang.Long" access="field">
-            <column name="MID" />
+            <column name="id" />
             <generator class="assigned" />
         </id>
         <property name="mType" access="field">
-            <column name="MTYPE" />
+            <column name="type" />
             <type name="org.hibernate.type.EnumType">
                 <param name="type">12</param>
                 <param name="enumClass">com.seventysevenagency.chat.types.ConversationType$Type</param>
             </type>
         </property>
         <property name="mName" type="java.lang.String" access="field">
-            <column name="MNAME" />
+            <column name="name" />
         </property>
     </class>
 </hibernate-mapping>
