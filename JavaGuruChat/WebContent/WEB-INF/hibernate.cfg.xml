@@ -10,5 +10,8 @@
   <property name="hibernate.default_schema">public</property>
   <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
   <mapping class="com.seventysevenagency.chat.domain.User" resource="com/seventysevenagency/chat/domain/User.hbm.xml"/>
+  <mapping class="com.seventysevenagency.chat.domain.Conversation" resource="com/seventysevenagency/chat/domain/Conversation.hbm.xml"/>
+  <mapping class="com.seventysevenagency.chat.domain.Message" resource="com/seventysevenagency/chat/domain/Message.hbm.xml"/>
+  <mapping class="com.seventysevenagency.chat.domain.Participant" resource="com/seventysevenagency/chat/domain/Participant.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
