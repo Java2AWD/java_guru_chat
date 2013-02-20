@@ -5,14 +5,14 @@
 <hibernate-mapping>
     <class name="com.seventysevenagency.chat.domain.Participant" table="PARTICIPANT">
         <id name="mId" type="java.lang.Long" access="field">
-            <column name="MID" />
+            <column name="id" />
             <generator class="assigned" />
         </id>
         <property name="mUserId" type="java.lang.Long" access="field">
-            <column name="MUSERID" />
+            <column name="user_id" />
         </property>
         <property name="mConversationId" type="java.lang.Long" access="field">
-            <column name="MCONVERSATIONID" />
+            <column name="conversation_id" />
         </property>
     </class>
 </hibernate-mapping>
