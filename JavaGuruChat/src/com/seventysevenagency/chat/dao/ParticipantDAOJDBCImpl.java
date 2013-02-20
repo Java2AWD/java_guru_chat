@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Participant;
-import com.seventysevenagency.chat.types.ConversationType.Type;
 
 public class ParticipantDAOJDBCImpl extends BaseDAO implements ParticipantDAO {
 	public void create(Participant participant) throws DAOException {
@@ -74,7 +72,7 @@ public class ParticipantDAOJDBCImpl extends BaseDAO implements ParticipantDAO {
 					.prepareStatement("UPDATE participant SET user_id = ? AND"
 							+ "conversation_id = ?" + "WHERE id = ?");
 
-			stm.setLong(1, participant.getUserId()));
+			stm.setLong(1, participant.getUserId());
 			stm.setLong(2, participant.getConversationId());
 			stm.setLong(3, participant.getId());
 			stm.execute();
