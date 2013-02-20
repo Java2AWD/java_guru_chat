@@ -12,7 +12,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("INSERT INTO participant "
+					.prepareStatement("INSERT INTO participants "
 							+ "(user_id, conversation_id)" + " VALUES (?, ?);");
 
 			stm.setLong(1, participant.getUserId());
@@ -30,7 +30,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("DELETE FROM participant "
+					.prepareStatement("DELETE FROM participants "
 							+ "WHERE id = ? ");
 
 			stm.setLong(1, id);
@@ -48,7 +48,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Participant participant = null;
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("SELECT (user_id, conversation_id) FROM participant "
+					.prepareStatement("SELECT (user_id, conversation_id) FROM participants "
 							+  "WHERE id = ? ");
 
 			stm.setLong(1, id);
@@ -69,7 +69,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("UPDATE participant SET user_id = ? AND"
+					.prepareStatement("UPDATE participants SET user_id = ? AND"
 							+ "conversation_id = ?" + "WHERE id = ?");
 
 			stm.setLong(1, participant.getUserId());

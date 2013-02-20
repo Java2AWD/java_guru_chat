@@ -15,7 +15,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("INSERT INTO conversation "
+					.prepareStatement("INSERT INTO conversations "
 							+ "(type, name)" + " VALUES (?, ?);");
 
 			stm.setString(1, String.valueOf(conversation.getType()));
@@ -35,7 +35,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("DELETE FROM conversation WHERE id = ?");
+					.prepareStatement("DELETE FROM conversations WHERE id = ?");
 
 			stm.setLong(1, id);
 			stm.execute();
@@ -54,7 +54,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		try {
 			PreparedStatement stm = connection
 					.prepareStatement("SELECT name, type "
-							+ "FROM conversation WHERE id = ?");
+							+ "FROM conversations WHERE id = ?");
 
 			stm.setLong(1, id);
 
@@ -77,7 +77,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("UPDATE conversation SET name = ?,"
+					.prepareStatement("UPDATE conversations SET name = ?,"
 							+ "type = ?" + "WHERE id = ?");
 
 			stm.setString(1, String.valueOf(conversation.getType()));
