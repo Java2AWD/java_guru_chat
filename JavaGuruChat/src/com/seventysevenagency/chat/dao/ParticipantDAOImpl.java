@@ -12,7 +12,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("INSERT INTO partiticant "
+					.prepareStatement("INSERT INTO participant "
 							+ "(user_id, conversation_id)" + " VALUES (?, ?);");
 
 			stm.setLong(1, participant.getUserId());
@@ -30,7 +30,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("DELETE FROM partiticant "
+					.prepareStatement("DELETE FROM participant "
 							+ "WHERE id = ? ");
 
 			stm.setLong(1, id);
@@ -48,7 +48,7 @@ public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 		Participant participant = null;
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("SELECT (user_id, conversation_id) FROM partiticant "
+					.prepareStatement("SELECT (user_id, conversation_id) FROM participant "
 							+  "WHERE id = ? ");
 
 			stm.setLong(1, id);

@@ -15,7 +15,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("INSERT INTO convesation "
+					.prepareStatement("INSERT INTO conversation "
 							+ "(type, name)" + " VALUES (?, ?);");
 
 			stm.setString(1, String.valueOf(conversation.getType()));
@@ -77,7 +77,7 @@ public class ConversationDAOJDBCImpl extends BaseDAO implements ConversationDAO 
 		Connection connection = this.getConnection();
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("UPDATE convesation SET name = ?,"
+					.prepareStatement("UPDATE conversation SET name = ?,"
 							+ "type = ?" + "WHERE id = ?");
 
 			stm.setString(1, String.valueOf(conversation.getType()));
