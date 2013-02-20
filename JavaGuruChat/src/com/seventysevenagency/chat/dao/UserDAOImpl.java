@@ -93,7 +93,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 
 		try {
 			PreparedStatement stm = connection
-					.prepareStatement("DETELE FROM users WHERE id = ?");
+					.prepareStatement("DELETE FROM users WHERE id = ?");
 			stm.setInt(1, id);
 			stm.execute();
 		} catch (SQLException e) {
