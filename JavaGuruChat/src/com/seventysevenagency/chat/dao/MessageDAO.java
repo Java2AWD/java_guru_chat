@@ -7,7 +7,7 @@ import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
 
 public interface MessageDAO {
-	public void create(Message message) throws DAOException;
+	public Long create(Message message) throws DAOException;
 
 	public void update(Message message) throws DAOException;
 
