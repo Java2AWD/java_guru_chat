@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import com.seventysevenagency.chat.domain.Participant;
 
-public class ParticipantDAOJDBCImpl extends BaseDAO implements ParticipantDAO {
+public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {
 	public void create(Participant participant) throws DAOException {
 		Connection connection = this.getConnection();
 		try {
