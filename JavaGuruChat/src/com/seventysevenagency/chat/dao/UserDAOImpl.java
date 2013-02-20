@@ -17,7 +17,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			PreparedStatement stm = connection
 					.prepareStatement("INSERT INTO users "
 							+ "(name, surname, username, password, email)"
-							+ " VALUES (?, ?, ?, SHA1(?), ?);");
+							+ " VALUES (?, ?, ?, ?, ?);");
 
 			stm.setString(1, user.getName());
 			stm.setString(2, user.getSurname());
@@ -70,6 +70,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.setInt(1, id);
 
 			ResultSet result = stm.executeQuery();
+			result.next();
 			user = new User();
 			user.setId(id);
 			user.setName(result.getString(1));

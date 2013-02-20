@@ -36,8 +36,8 @@ public class UserDAOImplTest {
 		try {
 			userDao.create(mUser);
 		} catch (DAOException e) {
-			fail("Exception is thrown");
 			e.printStackTrace();
+			fail("Exception is thrown");
 		}
 	}
 
@@ -83,8 +83,8 @@ public class UserDAOImplTest {
 			assertEquals(mUser.getName(), foundUser.getName());
 			assertEquals(mUser.getUsername(), mUser.getUsername());
 		} catch (DAOException e) {
-			fail("Exception is thrown");
 			e.printStackTrace();
+			fail("Exception is thrown");
 		}
 	}
 
@@ -96,8 +96,8 @@ public class UserDAOImplTest {
 			User foundUser = userDao.find(mUser.getId());
 			assertEquals(null, foundUser);
 		} catch (DAOException e) {
-			fail("Exception is thrown");
 			e.printStackTrace();
+			fail("Exception is thrown");
 		}
 	}
 
