@@ -6,7 +6,7 @@
     <class name="com.seventysevenagency.chat.domain.Participant" table="PARTICIPANT">
         <id name="mId" type="java.lang.Long" access="field">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="native" />
         </id>
         <property name="mUserId" type="java.lang.Long" access="field">
             <column name="user_id" />
