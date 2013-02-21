@@ -17,7 +17,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			PreparedStatement stm = connection
 					.prepareStatement("INSERT INTO users "
 							+ "(name, surname, username, password, email)"
-							+ " VALUES (?, ?, ?, SHA1(?), ?);");
+							+ " VALUES (?, ?, ?, ?, ?);");
 
 			stm.setString(1, user.getName());
 			stm.setString(2, user.getSurname());
@@ -70,6 +70,7 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.setInt(1, id);
 
 			ResultSet result = stm.executeQuery();
+			result.next();
 			user = new User();
 			user.setId(id);
 			user.setName(result.getString(1));
@@ -91,9 +92,9 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 	public void deleteById(int id) throws DAOException {
 		Connection connection = this.getConnection();
 
-		PreparedStatement stm;
 		try {
-			stm = connection.prepareStatement("DETELE FROM users WHERE id = ?");
+			PreparedStatement stm = connection
+					.prepareStatement("DELETE FROM users WHERE id = ?");
 			stm.setInt(1, id);
 			stm.execute();
 		} catch (SQLException e) {
@@ -101,6 +102,31 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 		} finally {
 			closeConnection(connection);
 		}
+	}
+
+	@Override
+	public User findByUsername(String username) throws DAOException {
+		Connection connection = this.getConnection();
+		User user = null;
+		try {
+			PreparedStatement stm = connection
+					.prepareStatement("SELECT id, name, surname, username, password, email "
+							+ "FROM users WHERE username = ?");
+			stm.setString(1, username);
+			ResultSet result = stm.executeQuery();
+			user = new User();
+			user.setId(result.getInt(1));
+			user.setName(result.getString(2));
+			user.setSurname(result.getString(3));
+			user.setUsername(result.getString(4));
+			user.setPassword(result.getString(5));
+			user.setEmail(result.getString(6));
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			closeConnection(connection);
+		}
+		return user;
 	}
 
 }

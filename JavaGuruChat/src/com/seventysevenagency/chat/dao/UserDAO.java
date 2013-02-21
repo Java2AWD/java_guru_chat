@@ -10,4 +10,6 @@ public interface UserDAO {
 	public User find(int id) throws DAOException;
 
 	public void deleteById(int id) throws DAOException;
+	
+	public User findByUsername(String username) throws DAOException;
 }

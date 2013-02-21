@@ -3,25 +3,25 @@ package com.seventysevenagency.chat.domain;
 import com.seventysevenagency.chat.types.ConversationType.Type;
 
 public class Conversation {	
-	private Integer mId;
+	private Long mId;
 	private Type mType;
 	private String mName;
-	public Integer getmId() {
+	public Long getId() {
 		return mId;
 	}
-	public void setmId(Integer mId) {
+	public void setId(Long mId) {
 		this.mId = mId;
 	}
-	public Type getmType() {
+	public Type getType() {
 		return mType;
 	}
-	public void setmType(Type mType) {
+	public void setType(Type mType) {
 		this.mType = mType;
 	}
-	public String getmName() {
+	public String getName() {
 		return mName;
 	}
-	public void setmName(String mName) {
+	public void setName(String mName) {
 		this.mName = mName;
 	}
 	
