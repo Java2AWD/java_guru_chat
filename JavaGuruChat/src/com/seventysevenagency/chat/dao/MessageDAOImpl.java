@@ -12,7 +12,7 @@ import com.seventysevenagency.chat.domain.User;
 public class MessageDAOImpl extends BaseDAO implements MessageDAO {
 
 	@Override
-	public void create(Message message) throws DAOException {
+	public  Long create(Message message) throws DAOException {
 		Connection connection = this.getConnection();
 
 		try {
@@ -26,6 +26,7 @@ public class MessageDAOImpl extends BaseDAO implements MessageDAO {
 		} finally {
 			closeConnection(connection);
 		}
+		return null;
 	}
 
 	@Override
