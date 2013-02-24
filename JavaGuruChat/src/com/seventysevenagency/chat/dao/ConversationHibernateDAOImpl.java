@@ -1,25 +1,21 @@
 package com.seventysevenagency.chat.dao;
 
-import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.seventysevenagency.chat.domain.Conversation;
-import com.seventysevenagency.chat.domain.Message;
-import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.util.HibernateUtil;
 
-public class MessageHibernateDAOImpl implements MessageDAO {
+public class ConversationHibernateDAOImpl implements ConversationDAO {
 
 	@Override
-	public Long create(Message message) throws DAOException {
+	public Long create(Conversation conversation) throws DAOException {
 		Long id = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			id = (Long) session.save(message);
+			id = (Long) session.save(conversation);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -31,11 +27,15 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 	}
 
 	@Override
-	public void update(Message message) throws DAOException {
+	public int deleteById(Long id) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
+		int result;
 		try {
-			session.update(message);
+			Query query = session
+					.createQuery("DELETE Conversation WHERE id = :id");
+			query.setLong("id", id);
+			result = query.executeUpdate();
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -43,24 +43,54 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		} finally {
 			session.close();
 		}
-
-	}
-
-	@Override
-	public Message find(int id) throws DAOException {
-		Message result = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		result = (Message) session.createQuery("FROM Message WHERE id = :id")
-				.setLong("id", id).uniqueResult();
 		return result;
 	}
 
 	@Override
-	public void deleteById(int id) throws DAOException {
+	public int delete(Conversation conversation) throws DAOException {
+		return deleteById(conversation.getId());
+	}
+
+	@Override
+	public Conversation select(Long id) throws DAOException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Conversation conversation = null;
+		try {
+			String hql = "FROM Conversation WHERE conversation_id = :conversation_id";
+			Query query = session.createQuery(hql);
+			query.setLong("conversation_id", id);
+			conversation = (Conversation) query.uniqueResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		} finally {
+			session.close();
+		}
+		return conversation;
+	}
+
+	@Override
+	public Conversation selectLast() throws DAOException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Conversation conversation = null;
+		try {
+			String hql = "FROM Conversation ORDER BY id DESC";
+			Query query = session.createQuery(hql);
+			query.setMaxResults(1);
+			conversation = (Conversation) query.uniqueResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		} finally {
+			session.close();
+		}
+		return conversation;
+	}
+
+	@Override
+	public void update(Conversation conversation) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			session.delete(find(id));
+			session.update(conversation);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -68,43 +98,6 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		} finally {
 			session.close();
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Message> findByUser(User user) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Message> list = null;
-		try {
-			String hql = "FROM Message WHERE user_id = :user_id";
-			Query query = session.createQuery(hql);
-			query.setLong("user_id", user.getId());
-			list = query.list();
-		} catch (Exception e) {
-			throw new DAOException(e);
-		} finally {
-			session.close();
-		}
-		return list;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Message> findByConversation(Conversation conversation)
-			throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Message> list = null;
-		try {
-			String hql = "FROM Message WHERE user_id = :converation_id";
-			Query query = session.createQuery(hql);
-			query.setLong("converation_id", conversation.getId());
-			list = query.list();
-		} catch (Exception e) {
-			throw new DAOException(e);
-		} finally {
-			session.close();
-		}
-		return list;
 	}
 
 }

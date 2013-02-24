@@ -15,7 +15,7 @@ public interface MessageDAO {
 
 	public void deleteById(int id) throws DAOException;
 
-	public Message findByUser(User user) throws DAOException;
+	public List<Message> findByUser(User user) throws DAOException;
 
 	public List<Message> findByConversation(Conversation conversation)
 			throws DAOException;
