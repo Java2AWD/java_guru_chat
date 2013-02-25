@@ -70,14 +70,15 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			stm.setInt(1, id);
 
 			ResultSet result = stm.executeQuery();
-			result.next();
-			user = new User();
-			user.setId(id);
-			user.setName(result.getString(1));
-			user.setSurname(result.getString(2));
-			user.setUsername(result.getString(3));
-			user.setPassword(result.getString(4));
-			user.setEmail(result.getString(5));
+			if(result.next()){
+				user = new User();
+				user.setId(id);
+				user.setName(result.getString(1));
+				user.setSurname(result.getString(2));
+				user.setUsername(result.getString(3));
+				user.setPassword(result.getString(4));
+				user.setEmail(result.getString(5));
+			}
 
 		} catch (SQLException e) {
 			throw new DAOException(e);
@@ -114,13 +115,15 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 							+ "FROM users WHERE username = ?");
 			stm.setString(1, username);
 			ResultSet result = stm.executeQuery();
-			user = new User();
-			user.setId(result.getInt(1));
-			user.setName(result.getString(2));
-			user.setSurname(result.getString(3));
-			user.setUsername(result.getString(4));
-			user.setPassword(result.getString(5));
-			user.setEmail(result.getString(6));
+			if(result.next()){
+				user = new User();
+				user.setId(result.getInt(1));
+				user.setName(result.getString(2));
+				user.setSurname(result.getString(3));
+				user.setUsername(result.getString(4));
+				user.setPassword(result.getString(5));
+				user.setEmail(result.getString(6));
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
