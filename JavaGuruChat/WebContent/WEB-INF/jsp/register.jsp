@@ -6,14 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html;">
 <title>Register</title>
 </head>
-<body>
-	<%
-	String registered = (String) request.getAttribute("success");
-	if(registered != null){
-		response.sendRedirect("login?registered=true");
-	}
-	%>
-	 
+<body>	 
 	<h1>Register</h1>
 	<form name="register" method="post">
 		<div>

@@ -47,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
 						newUser.setUsername(username);
 						newUser.setPassword(password);
 						userDB.create(newUser);
-						request.setAttribute("success", "User registered");
+						response.sendRedirect("login?registered=true");
 					}else{
 						request.setAttribute("username", username);
 						request.setAttribute("name", name);
@@ -73,9 +73,12 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("email", email);
 			request.setAttribute("error", "Please fill all fields");
 		}
-		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
-		dispatcher.forward(request, response);
+		if(request.getAttribute("error") != null){
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+			dispatcher.forward(request, response);
+		}
+		
 
 	}
 
