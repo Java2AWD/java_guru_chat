@@ -14,12 +14,12 @@ import com.seventysevenagency.chat.util.HibernateUtil;
 public class MessageHibernateDAOImpl implements MessageDAO {
 
 	@Override
-	public Long create(Message message) throws DAOException {
-		Long id = null;
+	public int create(Message message) throws DAOException {
+		int id;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			id = (Long) session.save(message);
+			id = (Integer) session.save(message);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();

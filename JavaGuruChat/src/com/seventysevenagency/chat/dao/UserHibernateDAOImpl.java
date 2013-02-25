@@ -42,12 +42,12 @@ public class UserHibernateDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User findById(long id) throws DAOException {
+	public User findById(int id) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		User user = null;
 		try {
-			user = (User) session.createQuery("FROM User WHERE id = ?")
-					.setLong(1, id).uniqueResult();
+			user = (User) session.createQuery("FROM User WHERE id = :id")
+					.setParameter("id", id).uniqueResult();
 		} catch (Exception e) {
 			throw new DAOException(e);
 		} finally {
@@ -57,7 +57,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int deleteById(long id) throws DAOException {
+	public int deleteById(int id) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		int result;
@@ -80,7 +80,8 @@ public class UserHibernateDAOImpl implements UserDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		User user = null;
 		try {
-			user = (User) session.createQuery("FROM User WHERE username = :username")
+			user = (User) session
+					.createQuery("FROM User WHERE username = :username")
 					.setParameter("username", username).uniqueResult();
 		} catch (Exception e) {
 			throw new DAOException(e);
