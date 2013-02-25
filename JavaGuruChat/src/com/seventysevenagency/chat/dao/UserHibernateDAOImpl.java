@@ -10,12 +10,12 @@ import com.seventysevenagency.chat.util.HibernateUtil;
 public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
-	public Long create(User user) throws DAOException {
-		Long id = null;
+	public int create(User user) throws DAOException {
+		int id;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			id = (Long) session.save(user);
+			id = (Integer) session.save(user);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();

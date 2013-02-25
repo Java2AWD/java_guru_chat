@@ -3,7 +3,7 @@ package com.seventysevenagency.chat.dao;
 import com.seventysevenagency.chat.domain.User;
 
 public interface UserDAO {
-	public Long create(User user) throws DAOException;
+	public int create(User user) throws DAOException;
 
 	public void update(User user) throws DAOException;
 
