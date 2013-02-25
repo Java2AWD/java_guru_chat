@@ -15,6 +15,9 @@
 		<input type = "password" name = "password" id = "password"/>
 		<input type = "submit" name = "submit" value = "Login"/>
 	</form>
+	<div>
+	<%=(request.getAttribute("registered") == null) ? "" :request.getAttribute("registered")%>
+	</div>
 	<a href="register">Register</a>
 </body>
 </html>

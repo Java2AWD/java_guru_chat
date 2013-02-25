@@ -7,6 +7,13 @@
 <title>Register</title>
 </head>
 <body>
+	<%
+	String registered = (String) request.getAttribute("success");
+	if(registered != null){
+		response.sendRedirect("login?registered=true");
+	}
+	%>
+	 
 	<h1>Register</h1>
 	<form name="register" method="post">
 		<div>
@@ -23,23 +30,19 @@
 		</div>
 		<div>
 			<label for="name">Name:</label> <input
-				type="text" name="name" id="name" />
+				type="text" name="name" id="name" value="<%= (request.getAttribute("name") == null) ? "" : request.getAttribute("name")%>"/>
 		</div>
 		<div>
 			<label for="surname">Surname:</label> <input
-				type="text" name="surname" id="surname" />
+				type="text" name="surname" id="surname" value="<%= (request.getAttribute("surname") == null) ? "" : request.getAttribute("surname")%>"/>
 		</div>
 		<div>
 			<label for="email">Email:</label> <input
-				type="text" name="email" id="email" />
+				type="text" name="email" id="email" value="<%= (request.getAttribute("email") == null) ? "" : request.getAttribute("email")%>"/>
 		</div>
 		<%
 			String cerror = (String) request.getAttribute("error");
-			if (cerror == null) {
-		%>
-		<div class="success"></div>
-		<%
-			} else {
+			if (cerror != null) {
 		%>
 		<div class="error">
 			<%=cerror%>

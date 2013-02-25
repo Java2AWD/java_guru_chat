@@ -21,6 +21,10 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String registered = request.getParameter("registered");
+		if(registered != null && registered.equals("true")){
+			request.setAttribute("registered", "You registered successfully");
+		}
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		dispatcher.forward(request, response);
 	}

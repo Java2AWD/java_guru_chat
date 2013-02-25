@@ -47,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
 						newUser.setUsername(username);
 						newUser.setPassword(password);
 						userDB.create(newUser);
-						System.out.println("1");
+						request.setAttribute("success", "User registered");
 					}else{
 						request.setAttribute("username", username);
 						request.setAttribute("name", name);
@@ -58,8 +58,7 @@ public class RegisterServlet extends HttpServlet {
 				} catch (DAOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				request.setAttribute("success", "User registered");
+				}				
 			} else {
 				request.setAttribute("username", username);
 				request.setAttribute("name", name);
