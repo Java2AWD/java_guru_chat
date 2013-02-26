@@ -50,8 +50,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 		User user = null;
 		try {
 			user = (User) session.createQuery("FROM User WHERE id = :id")
-					.setParameter("id", id).uniqueResult();
-			Hibernate.initialize(user.getmMessages());
+					.setParameter("id", id).uniqueResult();			
 			return user;
 		} catch (Exception e) {
 			return (User) null;

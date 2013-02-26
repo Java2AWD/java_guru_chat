@@ -22,16 +22,16 @@ public class TestEntryPoint {
 		User newUser;
 		try {
 			newUser = (User) userDao.findById(10);	
-			Set<Message> messages = newUser.getmMessages();		
-			messages.add(new Message());
-			messages.add(new Message());
+			Hibernate.initialize(newUser.getmMessages());
 			
+			Set<Message> messages = newUser.getmMessages();				
+			messages.add(new Message());
+			messages.add(new Message());
 			session.update(newUser);
 			session.getTransaction().commit();
 		} catch (DAOException e) {
 			e.printStackTrace();
 		} finally {
-			session.close();
 		}		
 	}
 }
