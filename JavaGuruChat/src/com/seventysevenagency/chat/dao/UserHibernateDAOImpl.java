@@ -44,9 +44,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
 	public User findById(int id) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
 		User user = null;
 		try {
 			user = (User) session.createQuery("FROM User WHERE id = :id")
@@ -54,8 +52,6 @@ public class UserHibernateDAOImpl implements UserDAO {
 			return user;
 		} catch (Exception e) {
 			return (User) null;
-		} finally {
-			session.getTransaction().commit();
 		}
 		
 	}

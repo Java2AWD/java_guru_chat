@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -16,15 +17,13 @@ public class TestEntryPoint {
 	public static void main(String[] args) {
 
 		SessionFactory sf = HibernateUtil.getSessionFactory();
-		Session session = sf.openSession();
+		Session session = sf.getCurrentSession();
 		session.beginTransaction();
 		UserDAO userDao = new UserHibernateDAOImpl();
 		User newUser;
 		try {
-			newUser = (User) userDao.findById(10);	
-			Hibernate.initialize(newUser.getmMessages());
-			
-			Set<Message> messages = newUser.getmMessages();				
+			newUser = (User) userDao.findById(10);			
+			Set<Message> messages = newUser.getmMessages();	
 			messages.add(new Message());
 			messages.add(new Message());
 			session.update(newUser);
