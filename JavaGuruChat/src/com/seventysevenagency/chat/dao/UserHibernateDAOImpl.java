@@ -1,5 +1,6 @@
 package com.seventysevenagency.chat.dao;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,7 +13,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 	@Override
 	public int create(User user) throws DAOException {
 		int id;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		try {
 			id = (Integer) session.save(user);
@@ -28,7 +29,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
 	public void update(User user) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		try {
 			session.update(user);
@@ -43,22 +44,26 @@ public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
 	public User findById(int id) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
 		User user = null;
 		try {
 			user = (User) session.createQuery("FROM User WHERE id = :id")
 					.setParameter("id", id).uniqueResult();
+			Hibernate.initialize(user.getmMessages());
+			return user;
 		} catch (Exception e) {
-			throw new DAOException(e);
+			return (User) null;
 		} finally {
-			session.close();
+			session.getTransaction().commit();
 		}
-		return user;
+		
 	}
 
 	@Override
 	public int deleteById(int id) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		int result;
 		try {
@@ -77,7 +82,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
 	public User findByUsername(String username) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		User user = null;
 		try {
 			user = (User) session

@@ -7,7 +7,7 @@
 		<id name="mId" type="int" access="field">
 			<column name="id" />
 			<generator class="native">
-				<param name="sequence">user_id_seq</param>
+				<param name="sequence">users_id_seq</param>
 			</generator>
 		</id>
 		<property name="mName" type="java.lang.String" access="field">
@@ -26,7 +26,7 @@
 			<column name="email" />
 		</property>
 
-		<set name="mMessages" table="messages" cascade="all" lazy="false" fetch="select">
+		<set name="mMessages" table="messages" cascade="all" lazy="true" fetch="select">
 			<key>
 				<column name="user_id" not-null="true" />
 			</key>

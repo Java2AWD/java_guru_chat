@@ -1,3 +1,6 @@
+import java.util.Set;
+
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -15,19 +18,18 @@ public class TestEntryPoint {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
-
 		UserDAO userDao = new UserHibernateDAOImpl();
 		User newUser;
 		try {
-			newUser = (User) userDao.findById(18);
-			
-			Message message1 = new Message();
-			newUser.getmMessages().add(message1);
+			newUser = (User) userDao.findById(10);	
+			Set<Message> messages = newUser.getmMessages();		
+			messages.add(new Message());
+			messages.add(new Message());	
+			System.out.println(session);
+			newUser.setmSurname("lala");
 			session.update(newUser);
-			
 			session.getTransaction().commit();
 		} catch (DAOException e) {
-			session.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
