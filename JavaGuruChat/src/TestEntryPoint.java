@@ -24,9 +24,8 @@ public class TestEntryPoint {
 			newUser = (User) userDao.findById(10);	
 			Set<Message> messages = newUser.getmMessages();		
 			messages.add(new Message());
-			messages.add(new Message());	
-			System.out.println(session);
-			newUser.setmSurname("lala");
+			messages.add(new Message());
+			
 			session.update(newUser);
 			session.getTransaction().commit();
 		} catch (DAOException e) {
