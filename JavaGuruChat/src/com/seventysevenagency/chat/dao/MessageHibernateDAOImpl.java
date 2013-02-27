@@ -61,7 +61,7 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		try {
 			String hql = "FROM Message WHERE user_id = :user_id";
 			Query query = session.createQuery(hql);
-			query.setLong("user_id", user.getmId());
+			query.setLong("user_id", user.getId());
 			list = query.list();
 		} catch (Exception e) {
 			throw new DAOException(e);

@@ -4,13 +4,13 @@
 <!-- Generated Feb 20, 2013 7:48:02 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
 	<class name="com.seventysevenagency.chat.domain.Message" table="MESSAGES">
-		<id name="mId" type="int" access="field">
+		<id name="id" type="int" access="field">
 			<column name="id"/>
 			<generator class="native">
-				<param name="sequence">message_id_seq</param>
+				<param name="sequence">messages_id_seq</param>
 			</generator>
 		</id>
-		<property name="mConversationId" type="int"
+		<property name="conversationId" type="int"
 			access="field">
 			<column name="conversation_id" />
 		</property>

@@ -3,56 +3,56 @@ package com.seventysevenagency.chat.domain;
 import java.util.Set;
 
 public class User {
-	private int mId;
-	private String mName;
-	private String mSurname;
-	private String mUsername;
-	private String mPassword;
-	private String mEmail;
-	private Set<Message> mMessages;
+	private int id;
+	private String name;
+	private String surname;
+	private String username;
+	private String password;
+	private String email;
+	private Set<Message> messages;
 	
-	public int getmId() {
-		return mId;
+	public int getId() {
+		return id;
 	}
-	public void setmId(int mId) {
-		this.mId = mId;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public String getmName() {
-		return mName;
+	public String getName() {
+		return name;
 	}
-	public void setmName(String mName) {
-		this.mName = mName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getmSurname() {
-		return mSurname;
+	public String getSurname() {
+		return surname;
 	}
-	public void setmSurname(String mSurname) {
-		this.mSurname = mSurname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
-	public String getmUsername() {
-		return mUsername;
+	public String getUsername() {
+		return username;
 	}
-	public void setmUsername(String mUsername) {
-		this.mUsername = mUsername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getmPassword() {
-		return mPassword;
+	public String getPassword() {
+		return password;
 	}
-	public void setmPassword(String mPassword) {
-		this.mPassword = mPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getmEmail() {
-		return mEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void setmEmail(String mEmail) {
-		this.mEmail = mEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public Set<Message> getmMessages() {
-		return mMessages;
+	public Set<Message> getMessages() {
+		return messages;
 	}
-	public void setmMessages(Set<Message> mMessages) {
-		this.mMessages = mMessages;
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
 	}
+	
 
 }

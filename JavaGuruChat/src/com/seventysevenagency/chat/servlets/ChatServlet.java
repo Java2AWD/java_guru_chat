@@ -23,7 +23,7 @@ public class ChatServlet extends HttpServlet {
 		User loggedUser = (User) session.getAttribute("user");
 		if (loggedUser != null) {
 			
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/public_chat.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/public_chat.jsp");
 			dispatcher.forward(request, response);
 		} else {
 			response.sendRedirect("login");

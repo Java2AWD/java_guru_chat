@@ -24,7 +24,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+				.getRequestDispatcher("/jsp/register.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -51,11 +51,11 @@ public class RegisterServlet extends HttpServlet {
 					System.out.println(existUser);
 					if (existUser == null) {
 						User newUser = new User();
-						newUser.setmEmail(email);
-						newUser.setmName(name);
-						newUser.setmSurname(surname);
-						newUser.setmUsername(username);
-						newUser.setmPassword(password);
+						newUser.setEmail(email);
+						newUser.setName(name);
+						newUser.setSurname(surname);
+						newUser.setUsername(username);
+						newUser.setPassword(password);
 						session.save(newUser);
 						session.getTransaction().commit();
 						response.sendRedirect("login?registered=true");
@@ -63,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 						request.setAttribute("error", "Username already taken");
 					}
 				} catch (DAOException e) {
-					// TODO Auto-generated catch block
+					session.getTransaction().rollback();
 					e.printStackTrace();
 				}
 			} else {
@@ -78,7 +78,7 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("surname", surname);
 			request.setAttribute("email", email);
 			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+					.getRequestDispatcher("/jsp/register.jsp");
 			dispatcher.forward(request, response);
 		}
 

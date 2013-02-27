@@ -2,7 +2,6 @@ package com.seventysevenagency.chat.dao;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.util.HibernateUtil;
@@ -13,15 +12,10 @@ public class UserHibernateDAOImpl implements UserDAO {
 	public int create(User user) throws DAOException {
 		int id;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction transaction = session.beginTransaction();
 		try {
 			id = (Integer) session.save(user);
-			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
 			throw new DAOException(e);
-		} finally {
-			session.close();
 		}
 		return id;
 	}

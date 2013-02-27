@@ -1,32 +1,32 @@
 package com.seventysevenagency.chat.domain;
 
 public class Message {
-	private int mId;
-	private int mConversationId;
-	private User mUser;
+	private int id;
+	private int conversationId;
+	private User user;
 
 	public User getUser() {
-		return mUser;
+		return user;
 	}
 
 	public void setUser(User user) {
-		this.mUser = user;
+		this.user = user;
 	}
 
 	public int getId() {
-		return mId;
+		return id;
 	}
 
 	public void setId(int mId) {
-		this.mId = mId;
+		this.id = mId;
 	}
 
 	public int getConversationId() {
-		return mConversationId;
+		return conversationId;
 	}
 
 	public void setConversationId(int mConversationId) {
-		this.mConversationId = mConversationId;
+		this.conversationId = mConversationId;
 	}
 
 }

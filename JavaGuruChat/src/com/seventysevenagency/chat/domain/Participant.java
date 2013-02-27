@@ -1,26 +1,32 @@
 package com.seventysevenagency.chat.domain;
 
 public class Participant {
-	private Long mId;
-	private Long mUserId;
-	private Long mConversationId;
+	private Long id;
+	private Long userId;
+	private Long conversationId;
+
 	public Long getId() {
-		return mId;
+		return id;
 	}
-	public void setId(Long mId) {
-		this.mId = mId;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
 	public Long getUserId() {
-		return mUserId;
+		return userId;
 	}
-	public void setUserId(Long mUserId) {
-		this.mUserId = mUserId;
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
+
 	public Long getConversationId() {
-		return mConversationId;
+		return conversationId;
 	}
-	public void setConversationId(Long mConversationId) {
-		this.mConversationId = mConversationId;
+
+	public void setConversationId(Long conversationId) {
+		this.conversationId = conversationId;
 	}
-	
+
 }
