@@ -17,8 +17,8 @@ public class Message {
 		return id;
 	}
 
-	public void setId(int mId) {
-		this.id = mId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getConversationId() {
