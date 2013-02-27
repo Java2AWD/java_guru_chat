@@ -1,7 +1,5 @@
-import java.util.Iterator;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -22,7 +20,7 @@ public class TestEntryPoint {
 		UserDAO userDao = new UserHibernateDAOImpl();
 		User newUser;
 		try {
-			newUser = (User) userDao.findById(10);			
+			newUser = (User) userDao.findById(11);			
 			Set<Message> messages = newUser.getmMessages();	
 			messages.add(new Message());
 			messages.add(new Message());

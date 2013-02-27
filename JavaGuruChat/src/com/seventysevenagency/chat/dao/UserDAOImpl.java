@@ -19,11 +19,11 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 							+ "(name, surname, username, password, email)"
 							+ " VALUES (?, ?, ?, ?, ?);");
 
-			stm.setString(1, user.getName());
-			stm.setString(2, user.getSurname());
-			stm.setString(3, user.getUsername());
+			stm.setString(1, user.getmName());
+			stm.setString(2, user.getmSurname());
+			stm.setString(3, user.getmUsername());
 			stm.setString(4, user.getPassword());
-			stm.setString(5, user.getEmail());
+			stm.setString(5, user.getmEmail());
 
 			stm.execute();
 		} catch (SQLException e) {
@@ -43,11 +43,11 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 							+ "surname = ?, " + "username = ?, "
 							+ "email = ? WHERE id = ?");
 
-			stm.setString(1, user.getName());
-			stm.setString(2, user.getSurname());
-			stm.setString(3, user.getUsername());
-			stm.setString(4, user.getEmail());
-			stm.setInt(5, user.getId());
+			stm.setString(1, user.getmName());
+			stm.setString(2, user.getmSurname());
+			stm.setString(3, user.getmUsername());
+			stm.setString(4, user.getmEmail());
+			stm.setInt(5, user.getmId());
 
 			stm.execute();
 		} catch (SQLException e) {
@@ -72,12 +72,12 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			ResultSet result = stm.executeQuery();
 			if(result.next()){
 				user = new User();
-				user.setId(id);
-				user.setName(result.getString(1));
-				user.setSurname(result.getString(2));
-				user.setUsername(result.getString(3));
-				user.setPassword(result.getString(4));
-				user.setEmail(result.getString(5));
+				user.setmId(id);
+				user.setmName(result.getString(1));
+				user.setmSurname(result.getString(2));
+				user.setmUsername(result.getString(3));
+				user.setmPassword(result.getString(4));
+				user.setmEmail(result.getString(5));
 			}
 
 		} catch (SQLException e) {
@@ -117,12 +117,12 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 			ResultSet result = stm.executeQuery();
 			if(result.next()){
 				user = new User();
-				user.setId(result.getInt(1));
-				user.setName(result.getString(2));
-				user.setSurname(result.getString(3));
-				user.setUsername(result.getString(4));
-				user.setPassword(result.getString(5));
-				user.setEmail(result.getString(6));
+				user.setmId(result.getInt(1));
+				user.setmName(result.getString(2));
+				user.setmSurname(result.getString(3));
+				user.setmUsername(result.getString(4));
+				user.setmPassword(result.getString(5));
+				user.setmEmail(result.getString(6));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

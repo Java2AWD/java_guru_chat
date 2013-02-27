@@ -1,6 +1,5 @@
 package com.seventysevenagency.chat.dao;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -30,15 +29,10 @@ public class UserHibernateDAOImpl implements UserDAO {
 	@Override
 	public void update(User user) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction transaction = session.beginTransaction();
 		try {
 			session.update(user);
-			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
 			throw new DAOException(e);
-		} finally {
-			session.close();
 		}
 	}
 
@@ -59,18 +53,13 @@ public class UserHibernateDAOImpl implements UserDAO {
 	@Override
 	public int deleteById(int id) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction transaction = session.beginTransaction();
 		int result;
 		try {
 			Query query = session.createQuery("DELETE User WHERE id = :id");
 			query.setParameter("id", id);
 			result = query.executeUpdate();
-			transaction.commit();
 		} catch (Exception e) {
-			transaction.rollback();
 			throw new DAOException(e);
-		} finally {
-			session.close();
 		}
 		return result;
 	}
