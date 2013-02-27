@@ -23,4 +23,14 @@
   <listener>
     <listener-class>com.seventysevenagency.chat.StartupListener</listener-class>
   </listener>
+  <servlet>
+    <description>Chatroom for users to connect and exchange messages</description>
+    <display-name>ChatServlet</display-name>
+    <servlet-name>ChatServlet</servlet-name>
+    <servlet-class>com.seventysevenagency.chat.servlets.ChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatServlet</servlet-name>
+    <url-pattern>/chatroom</url-pattern>
+  </servlet-mapping>
 </web-app>
