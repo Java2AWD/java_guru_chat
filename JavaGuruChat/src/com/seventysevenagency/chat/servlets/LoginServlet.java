@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAOImpl;
@@ -48,8 +49,9 @@ public class LoginServlet extends HttpServlet {
 				System.out.println(user.getPassword());
 				System.out.println(password);
 				if(user.getPassword().replaceAll("\\s","").equals(password)){
-					
-					response.sendRedirect("chats");
+					HttpSession session = request.getSession();
+					session.setAttribute("user", user);
+					response.sendRedirect("chatroom");
 				} else {
 					request.setAttribute("error", "Invalid username or password");					
 				}

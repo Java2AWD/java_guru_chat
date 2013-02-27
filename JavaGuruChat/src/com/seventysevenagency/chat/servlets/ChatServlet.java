@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.seventysevenagency.chat.domain.User;
 
 /**
  * Servlet implementation class ChatServlet
@@ -16,9 +19,16 @@ public class ChatServlet extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User loggedUser = (User) session.getAttribute("user");
+		if (loggedUser != null) {
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/public_chat.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			response.sendRedirect("login");
+		}
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/public_chat.jsp");
-		dispatcher.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
