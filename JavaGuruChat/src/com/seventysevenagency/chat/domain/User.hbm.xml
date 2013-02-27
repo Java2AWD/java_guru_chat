@@ -3,25 +3,34 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Feb 20, 2013 7:48:02 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.seventysevenagency.chat.domain.User" table="USER">
-        <id name="mId" type="int" access="field">
-            <column name="id" />
-            <generator class="native" />
-        </id>
-        <property name="mName" type="java.lang.String" access="field">
-            <column name="name" />
-        </property>
-        <property name="mSurname" type="java.lang.String" access="field">
-            <column name="surname" />
-        </property>
-        <property name="mUsername" type="java.lang.String" access="field">
-            <column name="username" />
-        </property>
-        <property name="mPassword" type="java.lang.String" access="field">
-            <column name="password" />
-        </property>
-        <property name="mEmail" type="java.lang.String" access="field">
-            <column name="email" />
-        </property>
-    </class>
+	<class name="com.seventysevenagency.chat.domain.User" table="USERS">
+		<id name="mId" type="int" access="field">
+			<column name="id" />
+			<generator class="native">
+				<param name="sequence">users_id_seq</param>
+			</generator>
+		</id>
+		<property name="mName" type="java.lang.String" access="field">
+			<column name="name" />
+		</property>
+		<property name="mSurname" type="java.lang.String" access="field">
+			<column name="surname" />
+		</property>
+		<property name="mUsername" type="java.lang.String" access="field">
+			<column name="username" />
+		</property>
+		<property name="mPassword" type="java.lang.String" access="field">
+			<column name="password" />
+		</property>
+		<property name="mEmail" type="java.lang.String" access="field">
+			<column name="email" />
+		</property>
+
+		<set name="mMessages" table="messages" cascade="all" lazy="true" fetch="select">
+			<key>
+				<column name="user_id" not-null="true" />
+			</key>
+			<one-to-many class="com.seventysevenagency.chat.domain.Message" />
+		</set>
+	</class>
 </hibernate-mapping>

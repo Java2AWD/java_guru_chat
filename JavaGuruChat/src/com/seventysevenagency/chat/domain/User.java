@@ -1,5 +1,7 @@
 package com.seventysevenagency.chat.domain;
 
+import java.util.Set;
+
 public class User {
 	private int mId;
 	private String mName;
@@ -7,52 +9,50 @@ public class User {
 	private String mUsername;
 	private String mPassword;
 	private String mEmail;
-
-	public int getId() {
+	private Set<Message> mMessages;
+	
+	public int getmId() {
 		return mId;
 	}
-
-	public void setId(int id) {
-		this.mId = id;
+	public void setmId(int mId) {
+		this.mId = mId;
 	}
 
-	public String getName() {
+	public String getmName() {
 		return mName;
 	}
-
-	public void setName(String name) {
-		this.mName = name;
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
-
-	public String getSurname() {
+	public String getmSurname() {
 		return mSurname;
 	}
-
-	public void setSurname(String surname) {
-		this.mSurname = surname;
+	public void setmSurname(String mSurname) {
+		this.mSurname = mSurname;
 	}
-
-	public String getUsername() {
+	public String getmUsername() {
 		return mUsername;
 	}
-
-	public void setUsername(String username) {
-		this.mUsername = username;
+	public void setmUsername(String mUsername) {
+		this.mUsername = mUsername;
 	}
-
-	public String getPassword() {
+	public String getmPassword() {
 		return mPassword;
 	}
-
-	public void setPassword(String password) {
-		this.mPassword = password;
+	public void setmPassword(String mPassword) {
+		this.mPassword = mPassword;
 	}
-
-	public String getEmail() {
+	public String getmEmail() {
 		return mEmail;
 	}
-
-	public void setEmail(String email) {
-		this.mEmail = email;
+	public void setmEmail(String mEmail) {
+		this.mEmail = mEmail;
 	}
+	public Set<Message> getmMessages() {
+		return mMessages;
+	}
+	public void setmMessages(Set<Message> mMessages) {
+		this.mMessages = mMessages;
+	}
+
 }

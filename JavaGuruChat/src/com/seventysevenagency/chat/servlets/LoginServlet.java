@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		String registered = request.getParameter("registered");
 		if(registered != null && registered.equals("true")){
 			request.setAttribute("registered", "You registered successfully");
@@ -46,9 +47,9 @@ public class LoginServlet extends HttpServlet {
 		try {
 			User user = userDB.findByUsername(username);
 			if(user != null){
-				System.out.println(user.getPassword());
+				System.out.println(user.getmPassword());
 				System.out.println(password);
-				if(user.getPassword().replaceAll("\\s","").equals(password)){
+				if(user.getmPassword().replaceAll("\\s","").equals(password)){
 					HttpSession session = request.getSession();
 					session.setAttribute("user", user);
 					response.sendRedirect("chatroom");
@@ -67,5 +68,4 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }

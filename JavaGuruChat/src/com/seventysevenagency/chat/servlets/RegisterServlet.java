@@ -8,11 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import com.seventysevenagency.chat.dao.DAOException;
-import com.seventysevenagency.chat.dao.UserDAOImpl;
+import com.seventysevenagency.chat.dao.UserDAO;
+import com.seventysevenagency.chat.dao.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
+import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class RegisterServlet extends HttpServlet {
+
+	private static final long serialVersionUID = -3076745569440957386L;
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -34,51 +41,46 @@ public class RegisterServlet extends HttpServlet {
 				&& !email.isEmpty() && !name.isEmpty() && !surname.isEmpty()) {
 			if (password.equals(repassword)) {
 				System.out.println("3");
-				UserDAOImpl userDB = new UserDAOImpl();
+				SessionFactory sf = HibernateUtil.getSessionFactory();
+				Session session = sf.getCurrentSession();
+				session.beginTransaction();
+				UserDAO userDao = new UserHibernateDAOImpl();
 				try {
 					System.out.println("2");
-					User existUser = userDB.findByUsername(username);	
+					User existUser = userDao.findByUsername(username);
 					System.out.println(existUser);
-					if (existUser == null) {						
+					if (existUser == null) {
 						User newUser = new User();
-						newUser.setEmail(email);
-						newUser.setName(name);
-						newUser.setSurname(surname);
-						newUser.setUsername(username);
-						newUser.setPassword(password);
-						userDB.create(newUser);
+						newUser.setmEmail(email);
+						newUser.setmName(name);
+						newUser.setmSurname(surname);
+						newUser.setmUsername(username);
+						newUser.setmPassword(password);
+						session.save(newUser);
+						session.getTransaction().commit();
 						response.sendRedirect("login?registered=true");
-					}else{
-						request.setAttribute("username", username);
-						request.setAttribute("name", name);
-						request.setAttribute("surname", surname);
-						request.setAttribute("email", email);
+					} else {
 						request.setAttribute("error", "Username already taken");
 					}
 				} catch (DAOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}				
+				}
 			} else {
-				request.setAttribute("username", username);
-				request.setAttribute("name", name);
-				request.setAttribute("surname", surname);
-				request.setAttribute("email", email);
 				request.setAttribute("error", "Password must match");
 			}
-		}else{
+		} else {
+			request.setAttribute("error", "Please fill all fields");
+		}
+		if (request.getAttribute("error") != null) {
 			request.setAttribute("username", username);
 			request.setAttribute("name", name);
 			request.setAttribute("surname", surname);
 			request.setAttribute("email", email);
-			request.setAttribute("error", "Please fill all fields");
-		}
-		if(request.getAttribute("error") != null){
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
 		}
-		
 
 	}
 

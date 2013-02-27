@@ -132,4 +132,16 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public User findById(long id) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteById(long id) throws DAOException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

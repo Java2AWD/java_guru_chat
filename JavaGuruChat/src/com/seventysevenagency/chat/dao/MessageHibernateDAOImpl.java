@@ -12,14 +12,12 @@ import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class MessageHibernateDAOImpl implements MessageDAO {
 
-	
-	
 	@Override
-	public Long create(Message message) throws DAOException {
-		Long id = null;
+	public int create(Message message) throws DAOException {
+		int id;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			id = (Long) session.save(message);
+			id = (Integer) session.save(message);
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
@@ -33,15 +31,15 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 			session.update(message);
 		} catch (Exception e) {
 			throw new DAOException(e);
-		}		
+		}
 	}
 
 	@Override
 	public Message find(int id) throws DAOException {
 		Message result = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		result = (Message) session.createQuery("FROM user WHERE id = ?")
-				.setParameter(1, id).uniqueResult();
+		result = (Message) session.createQuery("FROM Message WHERE id = :id")
+				.setLong("id", id).uniqueResult();
 		return result;
 	}
 
@@ -55,21 +53,38 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Message findByUser(User user) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Message> findByUser(User user) throws DAOException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Message> list = null;
+		try {
+			String hql = "FROM Message WHERE user_id = :user_id";
+			Query query = session.createQuery(hql);
+			query.setLong("user_id", user.getmId());
+			list = query.list();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		} finally {
+			session.close();
+		}
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> findByConversation(Conversation conversation)
 			throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Query query = session.createQuery("FROM messages WHERE conversation_id = :id");	
+		List<Message> result = null;
+		Query query = session
+				.createQuery("FROM messages WHERE conversation_id = :id");
 		query.setParameter("id", conversation.getId());
-		@SuppressWarnings("unchecked")
-		List<Message> result =  query.list();
-		return null;
+		try {
+			result = query.list();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return result;
 	}
-
 }

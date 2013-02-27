@@ -7,7 +7,7 @@ import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
 
 public interface MessageDAO {
-	public Long create(Message message) throws DAOException;
+	public int create(Message message) throws DAOException;
 
 	public void update(Message message) throws DAOException;
 
@@ -15,7 +15,7 @@ public interface MessageDAO {
 
 	public void deleteById(int id) throws DAOException;
 
-	public Message findByUser(User user) throws DAOException;
+	public List<Message> findByUser(User user) throws DAOException;
 
 	public List<Message> findByConversation(Conversation conversation)
 			throws DAOException;
