@@ -9,14 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAO;
-import com.seventysevenagency.chat.dao.UserDAOImpl;
 import com.seventysevenagency.chat.dao.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
-import com.seventysevenagency.chat.util.HibernateUtil;
 
 /**
  * Servlet implementation class LoginServlet
@@ -39,8 +35,6 @@ public class LoginServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
 		UserDAO userDB = new UserHibernateDAOImpl();
 		try {
 			User user = userDB.findByUsername(username);
