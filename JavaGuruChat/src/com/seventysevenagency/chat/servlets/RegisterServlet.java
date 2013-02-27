@@ -58,32 +58,24 @@ public class RegisterServlet extends HttpServlet {
 						session.save(newUser);
 						session.getTransaction().commit();						
 						response.sendRedirect("login?registered=true");
-					}else{
-						request.setAttribute("username", username);
-						request.setAttribute("name", name);
-						request.setAttribute("surname", surname);
-						request.setAttribute("email", email);
+					}else{						
 						request.setAttribute("error", "Username already taken");
 					}
 				} catch (DAOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
-			} else {
-				request.setAttribute("username", username);
-				request.setAttribute("name", name);
-				request.setAttribute("surname", surname);
-				request.setAttribute("email", email);
+			} else {				
 				request.setAttribute("error", "Password must match");
 			}
-		}else{
+		}else{			
+			request.setAttribute("error", "Please fill all fields");
+		}
+		if(request.getAttribute("error") != null){
 			request.setAttribute("username", username);
 			request.setAttribute("name", name);
 			request.setAttribute("surname", surname);
 			request.setAttribute("email", email);
-			request.setAttribute("error", "Please fill all fields");
-		}
-		if(request.getAttribute("error") != null){
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
