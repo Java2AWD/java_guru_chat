@@ -1,5 +1,8 @@
 package com.seventysevenagency.chat;
 
+import com.seventysevenagency.chat.controllers.Controller;
+import com.seventysevenagency.chat.models.ModelCreator;
+
 public class UrlMapping {
 
 	private ModelCreator modelCreator;
