@@ -83,12 +83,11 @@ public class UserHibernateDAOImpl implements UserDAO {
 			user = (User) session
 					.createQuery("FROM User WHERE username = :username")
 					.setParameter("username", username).uniqueResult();
+			return user;
 		} catch (Exception e) {
 			throw new DAOException(e);
-		} finally {
-			session.close();
 		}
-		return user;
+		
 	}
 
 }

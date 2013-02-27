@@ -1,15 +1,21 @@
 package com.seventysevenagency.chat.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAO;
 import com.seventysevenagency.chat.dao.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
+import com.seventysevenagency.chat.util.HibernateUtil;
 
 /**
  * Servlet implementation class LoginServlet
@@ -23,19 +29,25 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String output = "Nothing to display";
-		if (username != null) {
-			UserDAO userDao = new UserHibernateDAOImpl();
-			try {
-				User requestedUser = userDao.findByUsername(username);
-				output = requestedUser.getName() + " " + requestedUser.getSurname();
-			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//		String username = request.getParameter("username");
+//		String output = "Nothing to display";
+//		if (username != null) {
+//			UserDAO userDao = new UserHibernateDAOImpl();
+//			try {
+//				User requestedUser = userDao.findByUsername(username);
+//				output = requestedUser.getName() + " " + requestedUser.getSurname();
+//			} catch (DAOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		response.getWriter().println(output);
+		String registered = request.getParameter("registered");
+		if(registered != null && registered.equals("true")){
+			request.setAttribute("registered", "You registered successfully");
 		}
-		response.getWriter().println(output);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -44,26 +56,32 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
-		String email = request.getParameter("email");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
-		if (name != null && surname != null && email != null
-				&& username != null && password != null) {
-			UserDAO userDao = new UserHibernateDAOImpl();
-			User newUser = new User();
-			newUser.setName(name);
-			newUser.setSurname(surname);
-			newUser.setUsername(username);
-			newUser.setEmail(email);
-			newUser.setPassword(password);
-			try {
-				userDao.create(newUser);
-			} catch (DAOException e) {
-				e.printStackTrace();
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.getCurrentSession();
+		session.beginTransaction();
+		UserHibernateDAOImpl userDao = new UserHibernateDAOImpl();		
+		try {
+			User user = userDao.findByUsername(username);
+			if(user != null){
+				System.out.println(user.getmPassword());
+				System.out.println(password);
+				if(user.getmPassword().replaceAll("\\s","").equals(password)){					
+					response.sendRedirect("chats");
+				} else {
+					request.setAttribute("error", "Invalid username or password");					
+				}
+			} else {
+				request.setAttribute("error", "Invalid username or password");	
 			}
+			if(request.getAttribute("error") != null){
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+				dispatcher.forward(request, response);
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
