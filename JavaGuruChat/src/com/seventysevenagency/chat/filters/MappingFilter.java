@@ -49,23 +49,23 @@ public class MappingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		String url = req.getRequestURI().replace("/JavaGuruChat", "");
-		System.out.println(url);
-		UrlMapping urlMapping = mapping.get(url);
-		if (urlMapping == null) {
-			//
+		String url = req.getRequestURI().replace("/JavaGuruChat", "");		
+		if(!url.matches(".*(css|jpg|png|gif|js)")){			
+			System.out.println(url);
+			UrlMapping urlMapping = mapping.get(url);
+			if (urlMapping == null) {
+				//
+			}
+			ModelCreator modelCreator = urlMapping.getModelCreator();
+			IModel model = modelCreator.createModel(req);
+	
+			Controller controller = urlMapping.getController();
+			controller.execute(model);
+			req.setAttribute("model", model);
+			
+			RequestDispatcher view = req.getRequestDispatcher(urlMapping.getJsp());
+			view.forward(req, response);
 		}
-		System.out.println(urlMapping);
-		ModelCreator modelCreator = urlMapping.getModelCreator();
-		IModel model = modelCreator.createModel(req);
-
-		Controller controller = urlMapping.getController();
-		controller.execute(model);
-
-		req.setAttribute("model", model);
-
-		RequestDispatcher view = req.getRequestDispatcher(urlMapping.getJsp());
-		view.forward(req, response);
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

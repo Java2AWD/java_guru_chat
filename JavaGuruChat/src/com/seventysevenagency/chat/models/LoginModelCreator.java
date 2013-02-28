@@ -7,7 +7,7 @@ public class LoginModelCreator extends ModelCreator {
 
 	@Override
 	public IModel createModel(HttpServletRequest request) {
-		String login = request.getParameter("login");
+		String login = request.getParameter("username");
 		String password = request.getParameter("password");
 		
 		LoginModel model = new LoginModel();
