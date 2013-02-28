@@ -2,7 +2,7 @@ package com.seventysevenagency.chat.mvc.models;
 
 
 public class RegisterModel extends IModel {
-	private String login;
+	private String username;
 	private String password;
 	private String warning;
 	public String getWarning() {
@@ -13,12 +13,12 @@ public class RegisterModel extends IModel {
 		this.warning = warning;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

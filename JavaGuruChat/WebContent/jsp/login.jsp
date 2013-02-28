@@ -1,37 +1,49 @@
 <jsp:include page="/jsp/header.jsp" />
 </head>
-<%@ page import="com.seventysevenagency.chat.mvc.models.LoginModel" %>
+<%@ page import="com.seventysevenagency.chat.mvc.models.LoginModel"%>
 <body>
-	<h1>Login</h1>
-	<form name="login" method="post">
-		<label for="username">Username:</label> <input type="text"
-			name="username" id="username" /> <label for="password">Password:</label>
-		<input type="password" name="password" id="password" /> <input
-			type="submit" name="submit" value="Login" />
-	</form>
-	<% LoginModel model = (LoginModel) request.getAttribute("model"); %>
-	<%=model.getUsername()%>
-	
-	<%
-		String csuccess = (String) request.getAttribute("registered");
-		if (csuccess != null) {
-	%>
-	<div class="success">
-		<%=csuccess%>
+	<div class="container">
+		<h1>Login</h1>
+		<%
+			LoginModel model = (LoginModel) request.getAttribute("model");
+		%>
+		<form class="form-horizontal" name="login" method="post">
+			<div class="control-group">
+				<label class="control-label" for="inputUsername">Username</label>
+				<div class="controls">
+					<input type="text" id="inputUsername"
+						value="<%=(model.getUsername() != null) ? model.getUsername() : ""%>"
+						name="username" placeholder="Email">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password</label>
+				<div class="controls">
+					<input type="password" id="inputPassword" name="password"
+						placeholder="Password">
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<p>
+						<small>Don't have account?<a href="register"> Register</a></small>
+					</p>
+					<button type="submit" class="btn">Sign in</button>
+				</div>
+			</div>	
+			<%
+				String error = model.getWarning();
+				if (error != null) {
+			%>
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Warning!</strong> <%= error %>
+			</div>
+
+			<%
+				}
+			%>		
+		</form>
 	</div>
-	<%
-		}
-	%>
-	<%
-		String cerror = (String) request.getAttribute("error");
-		if (cerror != null) {
-	%>
-	<div class="error">
-		<%=cerror%>
-	</div>
-	<%
-		}
-	%>
-	<a href="register">Register</a>
 </body>
 </html>

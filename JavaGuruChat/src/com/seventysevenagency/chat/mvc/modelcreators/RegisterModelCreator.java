@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.LoginModel;
+import com.seventysevenagency.chat.mvc.models.RegisterModel;
 
 
 public class RegisterModelCreator extends ModelCreator {
@@ -13,7 +14,7 @@ public class RegisterModelCreator extends ModelCreator {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		LoginModel model = new LoginModel();
+		RegisterModel model = new RegisterModel();
 		model.setUsername(username);
 		model.setPassword(password);
 		

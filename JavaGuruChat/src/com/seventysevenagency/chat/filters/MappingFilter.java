@@ -13,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.seventysevenagency.chat.mvc.controllers.*;
 import com.seventysevenagency.chat.mvc.mapping.*;
@@ -57,20 +58,22 @@ public class MappingFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");		
 		if(!url.matches(".*(css|jpg|png|gif|js)")){			
-			System.out.println(url);
 			UrlMapping urlMapping = mapping.get(url);
 			if (urlMapping == null) {
-				//
+				RequestDispatcher view = req.getRequestDispatcher("/jsp/404.jsp");
+				view.forward(req, response);
+			}else{
+				ModelCreator modelCreator = urlMapping.getModelCreator();
+				IModel model = modelCreator.createModel(req);
+		
+				Controller controller = urlMapping.getController();
+				controller.execute(model, req);
+				req.setAttribute("model", model);
+				RequestDispatcher view = req.getRequestDispatcher(urlMapping.getJsp());
+				view.forward(req, response);
 			}
-			ModelCreator modelCreator = urlMapping.getModelCreator();
-			IModel model = modelCreator.createModel(req);
-	
-			Controller controller = urlMapping.getController();
-			controller.execute(model);
-			req.setAttribute("model", model);
-			
-			RequestDispatcher view = req.getRequestDispatcher(urlMapping.getJsp());
-			view.forward(req, response);
+		}else{
+			chain.doFilter(request, response);
 		}
 	}
 
