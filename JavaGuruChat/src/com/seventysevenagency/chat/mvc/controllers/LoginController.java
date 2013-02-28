@@ -1,7 +1,7 @@
-package com.seventysevenagency.chat.controllers;
+package com.seventysevenagency.chat.mvc.controllers;
 
-import com.seventysevenagency.chat.models.IModel;
-import com.seventysevenagency.chat.models.LoginModel;
+import com.seventysevenagency.chat.mvc.models.IModel;
+import com.seventysevenagency.chat.mvc.models.LoginModel;
 
 public class LoginController implements Controller {
 
@@ -10,7 +10,7 @@ public class LoginController implements Controller {
 		// TODO Auto-generated method stub
 		LoginModel loginModel = (LoginModel) model;
 		
-		if(loginModel.getLogin() != ""){
+		if(loginModel.getUsername() != ""){
 			loginModel.setWarning("error");
 		}
 		

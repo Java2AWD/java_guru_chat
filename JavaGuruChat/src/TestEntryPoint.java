@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAO;
-import com.seventysevenagency.chat.dao.UserHibernateDAOImpl;
+import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.util.HibernateUtil;

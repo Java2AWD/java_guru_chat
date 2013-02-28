@@ -1,10 +1,13 @@
-package com.seventysevenagency.chat.dao;
+package com.seventysevenagency.chat.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.seventysevenagency.chat.dao.BaseDAO;
+import com.seventysevenagency.chat.dao.DAOException;
+import com.seventysevenagency.chat.dao.ParticipantDAO;
 import com.seventysevenagency.chat.domain.Participant;
 
 public class ParticipantDAOImpl extends BaseDAO implements ParticipantDAO {

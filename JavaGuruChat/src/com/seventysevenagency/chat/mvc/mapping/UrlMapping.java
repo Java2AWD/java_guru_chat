@@ -1,7 +1,7 @@
-package com.seventysevenagency.chat;
+package com.seventysevenagency.chat.mvc.mapping;
 
-import com.seventysevenagency.chat.controllers.Controller;
-import com.seventysevenagency.chat.models.ModelCreator;
+import com.seventysevenagency.chat.mvc.controllers.Controller;
+import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 
 public class UrlMapping {
 

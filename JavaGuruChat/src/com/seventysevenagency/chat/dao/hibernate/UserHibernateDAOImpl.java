@@ -1,8 +1,10 @@
-package com.seventysevenagency.chat.dao;
+package com.seventysevenagency.chat.dao.hibernate;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.seventysevenagency.chat.dao.DAOException;
+import com.seventysevenagency.chat.dao.UserDAO;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.util.HibernateUtil;
 

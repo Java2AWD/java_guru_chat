@@ -14,12 +14,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import com.seventysevenagency.chat.UrlMapping;
-import com.seventysevenagency.chat.controllers.Controller;
-import com.seventysevenagency.chat.controllers.LoginController;
-import com.seventysevenagency.chat.models.IModel;
-import com.seventysevenagency.chat.models.LoginModelCreator;
-import com.seventysevenagency.chat.models.ModelCreator;
+import com.seventysevenagency.chat.mvc.controllers.*;
+import com.seventysevenagency.chat.mvc.mapping.*;
+import com.seventysevenagency.chat.mvc.modelcreators.*;
+import com.seventysevenagency.chat.mvc.models.*;
 
 /**
  * Servlet Filter implementation class MappingFilter
@@ -41,6 +39,14 @@ public class MappingFilter implements Filter {
 		loginPage.setJsp("/jsp/login.jsp");
 
 		mapping.put(loginPage.getUrl(), loginPage);
+		
+		UrlMapping registerPage = new UrlMapping();
+		registerPage.setUrl("/register");
+		registerPage.setModelCreator(new RegisterModelCreator());
+		registerPage.setController(new RegisterController());
+		registerPage.setJsp("/jsp/register.jsp");
+
+		mapping.put(registerPage.getUrl(), registerPage);
 	}
 
 	public void destroy() {

@@ -1,4 +1,4 @@
-package com.seventysevenagency.chat.dao;
+package com.seventysevenagency.chat.dao.hibernate;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.seventysevenagency.chat.dao.DAOException;
+import com.seventysevenagency.chat.dao.ParticipantDAO;
 import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Participant;
 import com.seventysevenagency.chat.util.HibernateUtil;

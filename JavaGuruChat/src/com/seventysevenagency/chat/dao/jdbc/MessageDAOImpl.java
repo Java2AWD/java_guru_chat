@@ -1,10 +1,13 @@
-package com.seventysevenagency.chat.dao;
+package com.seventysevenagency.chat.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.seventysevenagency.chat.dao.BaseDAO;
+import com.seventysevenagency.chat.dao.DAOException;
+import com.seventysevenagency.chat.dao.MessageDAO;
 import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;

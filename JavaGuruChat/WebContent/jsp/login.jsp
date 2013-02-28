@@ -1,6 +1,6 @@
 <jsp:include page="/jsp/header.jsp" />
 </head>
-<%@ page import="com.seventysevenagency.chat.models.LoginModel" %>
+<%@ page import="com.seventysevenagency.chat.mvc.models.LoginModel" %>
 <body>
 	<h1>Login</h1>
 	<form name="login" method="post">
@@ -10,7 +10,7 @@
 			type="submit" name="submit" value="Login" />
 	</form>
 	<% LoginModel model = (LoginModel) request.getAttribute("model"); %>
-	<%= model.getLogin() %>
+	<%=model.getUsername()%>
 	
 	<%
 		String csuccess = (String) request.getAttribute("registered");
