@@ -13,12 +13,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.seventysevenagency.chat.mvc.controllers.*;
-import com.seventysevenagency.chat.mvc.mapping.*;
-import com.seventysevenagency.chat.mvc.modelcreators.*;
-import com.seventysevenagency.chat.mvc.models.*;
+import com.seventysevenagency.chat.mvc.controllers.Controller;
+import com.seventysevenagency.chat.mvc.controllers.LoginController;
+import com.seventysevenagency.chat.mvc.controllers.RegisterController;
+import com.seventysevenagency.chat.mvc.mapping.UrlMapping;
+import com.seventysevenagency.chat.mvc.modelcreators.LoginModelCreator;
+import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
+import com.seventysevenagency.chat.mvc.modelcreators.RegisterModelCreator;
+import com.seventysevenagency.chat.mvc.models.IModel;
 
 /**
  * Servlet Filter implementation class MappingFilter
@@ -40,7 +43,7 @@ public class MappingFilter implements Filter {
 		loginPage.setJsp("/jsp/login.jsp");
 
 		mapping.put(loginPage.getUrl(), loginPage);
-		
+
 		UrlMapping registerPage = new UrlMapping();
 		registerPage.setUrl("/register");
 		registerPage.setModelCreator(new RegisterModelCreator());
@@ -56,23 +59,26 @@ public class MappingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		String url = req.getRequestURI().replace("/JavaGuruChat", "");		
-		if(!url.matches(".*(css|jpg|png|gif|js)")){			
-			UrlMapping urlMapping = mapping.get(url);
+		String url = req.getRequestURI().replace("/JavaGuruChat", "");
+		if (!url.matches(".*(css|jpg|png|gif|js)")) {
+			UrlMapping urlMapping = mapping.get(url);		
+			
 			if (urlMapping == null) {
-				RequestDispatcher view = req.getRequestDispatcher("/jsp/404.jsp");
+				RequestDispatcher view = req
+						.getRequestDispatcher("/jsp/404.jsp");
 				view.forward(req, response);
-			}else{
+			} else {
 				ModelCreator modelCreator = urlMapping.getModelCreator();
 				IModel model = modelCreator.createModel(req);
-		
+
 				Controller controller = urlMapping.getController();
 				controller.execute(model, req);
 				req.setAttribute("model", model);
-				RequestDispatcher view = req.getRequestDispatcher(urlMapping.getJsp());
+				RequestDispatcher view = req.getRequestDispatcher(urlMapping
+						.getJsp());
 				view.forward(req, response);
 			}
-		}else{
+		} else {
 			chain.doFilter(request, response);
 		}
 	}

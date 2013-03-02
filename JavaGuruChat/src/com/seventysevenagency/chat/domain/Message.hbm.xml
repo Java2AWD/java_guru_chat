@@ -14,6 +14,11 @@
 			access="field">
 			<column name="conversation_id" />
 		</property>
+		
+		<property name="text" type="java.lang.String"
+			access="field">
+			<column name="text" />
+		</property>
 
 		<many-to-one name="user" fetch="select"
 			class="com.seventysevenagency.chat.domain.User">

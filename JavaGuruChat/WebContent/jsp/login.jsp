@@ -32,7 +32,7 @@
 				</div>
 			</div>	
 			<%
-				String error = model.getWarning();
+				String error = model.getWarning("error");
 				if (error != null) {
 			%>
 			<div class="alert alert-error">

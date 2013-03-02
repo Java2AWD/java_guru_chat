@@ -4,6 +4,7 @@ public class Message {
 	private int id;
 	private int conversationId;
 	private User user;
+	private String text;
 
 	public User getUser() {
 		return user;
@@ -27,6 +28,14 @@ public class Message {
 
 	public void setConversationId(int mConversationId) {
 		this.conversationId = mConversationId;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 }

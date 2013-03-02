@@ -12,4 +12,6 @@ public interface UserDAO {
 	public int deleteById(int id) throws DAOException;
 	
 	public User findByUsername(String username) throws DAOException;
+	
+	public User authorize(String username, String password) throws DAOException;
 }

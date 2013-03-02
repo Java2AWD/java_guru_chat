@@ -16,33 +16,27 @@ import com.seventysevenagency.chat.util.HibernateUtil;
 public class LoginController implements Controller {
 
 	@Override
-	public void execute(IModel model, HttpServletRequest request){
-		// TODO Auto-generated method stub
+	public void execute(IModel model, HttpServletRequest request) {
+
 		LoginModel loginModel = (LoginModel) model;
 		String username = loginModel.getUsername();
 		String password = loginModel.getPassword();
-		if (username != null || password != null){
-			if ( username == "" || password == "") {
-				loginModel.setWarning("Please fill in all fields");
+		if (username != null || password != null) {
+			if (username == "" || password == "") {
+				loginModel.addWarning("error", "Please fill in all fields");
 			} else {
 				UserDAO userDB = new UserHibernateDAOImpl();
 				Session session = HibernateUtil.getSessionFactory()
 						.getCurrentSession();
 				session.beginTransaction();
 				try {
-					User user = userDB.findByUsername(username);
+					User user = userDB.authorize(username, password);
 					if (user != null) {
-						if (user.getPassword().replaceAll("\\s", "")
-								.equals(password)) {
-							loginModel.setWarning("Logged");
-							HttpSession userSession = request.getSession();
-							userSession.setAttribute("user", user);
-							System.out.println(userSession.getAttribute("user"));
-						} else {
-							loginModel.setWarning("Invalid username or password");
-						}
+						loginModel.addWarning("logged", "Logged");
+						HttpSession userSession = request.getSession();
+						userSession.setAttribute("user", user);
 					} else {
-						loginModel.setWarning("Invalid username or password");
+						loginModel.addWarning("error", "Invalid username or password");
 					}
 				} catch (DAOException e) {
 					e.printStackTrace();

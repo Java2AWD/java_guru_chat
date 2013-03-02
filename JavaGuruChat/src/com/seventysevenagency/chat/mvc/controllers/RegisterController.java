@@ -2,20 +2,70 @@ package com.seventysevenagency.chat.mvc.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+
+import com.seventysevenagency.chat.dao.DAOException;
+import com.seventysevenagency.chat.dao.UserDAO;
+import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.RegisterModel;
+import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class RegisterController implements Controller {
 
 	@Override
 	public void execute(IModel model, HttpServletRequest request) {
-		// TODO Auto-generated method stub
+
 		RegisterModel registerModel = (RegisterModel) model;
-		
-		if(registerModel.getUsername() != ""){
-			registerModel.setWarning("error");
+		String requestMethod = request.getMethod();
+
+		if (requestMethod.equals("POST")) {
+			// validation new user data and saving to db
+			if (validateModel(registerModel)) {
+				Session session = HibernateUtil.getSessionFactory()
+						.getCurrentSession();
+				session.beginTransaction();
+				UserDAO userDao = new UserHibernateDAOImpl();
+				try {
+					userDao.create(registerModel.user);
+				} catch (DAOException e) {
+					session.getTransaction().rollback();
+					e.printStackTrace();
+					registerModel.addWarning("create",
+							"Failed to create a user");
+				}
+				session.getTransaction().commit();
+			}
+		} else {
+			// Get request
 		}
-		
+
 	}
 
+	public boolean validateModel(RegisterModel model) {
+
+		boolean isValid = true;
+
+		String username = model.user.getUsername();
+		if (username == null || username.isEmpty()) {
+			model.addWarning("username", "Username is empty");
+			isValid = false;
+		}
+
+		String password = model.user.getPassword();
+		if (password == null || password.isEmpty()) {
+			model.addWarning("password", "Password is empty");
+			isValid = false;
+		} else if (password.length() < 4) {
+			model.addWarning("password", "Password is too short");
+			isValid = false;
+		}
+
+		String name = model.user.getName();
+		if (name == null || name.isEmpty()) {
+			model.addWarning("name", "Please, provide your name...");
+			isValid = false;
+		}
+		return isValid;
+	}
 }

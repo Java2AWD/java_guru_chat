@@ -7,29 +7,16 @@ import com.seventysevenagency.chat.util.HibernateUtil;
 
 /**
  * Application Lifecycle Listener implementation class StartupListener
- *
  */
 public class StartupListener implements ServletContextListener {
 
-    /**
-     * Default constructor. 
-     */
-    public StartupListener() {
-        // TODO Auto-generated constructor stub
-    }
+	public StartupListener() {
+	}
 
-	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
-     */
-    public void contextInitialized(ServletContextEvent arg0) {
-        HibernateUtil.getSessionFactory();
-    }
+	public void contextInitialized(ServletContextEvent arg0) {
+	}
 
-	/**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-     */
-    public void contextDestroyed(ServletContextEvent arg0) {
-        // TODO Auto-generated method stub
-    }
-	
+	public void contextDestroyed(ServletContextEvent arg0) {
+	}
+
 }

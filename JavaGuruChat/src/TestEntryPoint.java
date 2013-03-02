@@ -21,7 +21,7 @@ public class TestEntryPoint {
 		User newUser;
 		try {
 			newUser = (User) userDao.findById(11);			
-			Set<Message> messages = newUser.getmMessages();	
+			Set<Message> messages = newUser.getMessages();	
 			messages.add(new Message());
 			messages.add(new Message());
 			session.update(newUser);

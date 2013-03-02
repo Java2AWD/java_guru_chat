@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAO;
 import com.seventysevenagency.chat.domain.User;
+import com.seventysevenagency.chat.util.EncryptionHelper;
 import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class UserHibernateDAOImpl implements UserDAO {
@@ -15,6 +16,7 @@ public class UserHibernateDAOImpl implements UserDAO {
 		int id;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
+			user.setPassword(EncryptionHelper.md5(user.getPassword()));
 			id = (Integer) session.save(user);
 		} catch (Exception e) {
 			throw new DAOException(e);
@@ -34,16 +36,16 @@ public class UserHibernateDAOImpl implements UserDAO {
 
 	@Override
 	public User findById(int id) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		User user = null;
 		try {
 			user = (User) session.createQuery("FROM User WHERE id = :id")
-					.setParameter("id", id).uniqueResult();			
+					.setParameter("id", id).uniqueResult();
 			return user;
 		} catch (Exception e) {
 			return (User) null;
 		}
-		
+
 	}
 
 	@Override
@@ -72,7 +74,23 @@ public class UserHibernateDAOImpl implements UserDAO {
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
-		
+
+	}
+
+	@Override
+	public User authorize(String username, String password) throws DAOException {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		User user = null;
+		try {
+			Query query = session
+					.createQuery("FROM User WHERE username = :username AND password = :password");
+			query.setParameter("username", username);
+			query.setParameter("password", EncryptionHelper.md5(password));
+			user = (User) query.uniqueResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return user;
 	}
 
 }
