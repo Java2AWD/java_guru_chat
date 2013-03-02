@@ -3,7 +3,7 @@
 <%@ page import="com.seventysevenagency.chat.mvc.models.LoginModel"%>
 <body>
 	<div class="container">
-		<h1>Login</h1>
+		<legend><h1 class="login-header">Login</h1></legend>
 		<%
 			LoginModel model = (LoginModel) request.getAttribute("model");
 		%>

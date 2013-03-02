@@ -14,10 +14,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import com.seventysevenagency.chat.mvc.controllers.ChatroomController;
 import com.seventysevenagency.chat.mvc.controllers.Controller;
 import com.seventysevenagency.chat.mvc.controllers.LoginController;
 import com.seventysevenagency.chat.mvc.controllers.RegisterController;
 import com.seventysevenagency.chat.mvc.mapping.UrlMapping;
+import com.seventysevenagency.chat.mvc.modelcreators.ChatroomModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.LoginModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.RegisterModelCreator;
@@ -36,6 +38,8 @@ public class MappingFilter implements Filter {
 	 */
 	public MappingFilter() {
 		mapping = new HashMap<String, UrlMapping>();
+		
+		//Login page mapping
 		UrlMapping loginPage = new UrlMapping();
 		loginPage.setUrl("/login");
 		loginPage.setModelCreator(new LoginModelCreator());
@@ -44,6 +48,7 @@ public class MappingFilter implements Filter {
 
 		mapping.put(loginPage.getUrl(), loginPage);
 
+		//Register page mapping
 		UrlMapping registerPage = new UrlMapping();
 		registerPage.setUrl("/register");
 		registerPage.setModelCreator(new RegisterModelCreator());
@@ -51,6 +56,15 @@ public class MappingFilter implements Filter {
 		registerPage.setJsp("/jsp/register.jsp");
 
 		mapping.put(registerPage.getUrl(), registerPage);
+		
+		//Public chat page mapping
+		UrlMapping chatroomPage = new UrlMapping();
+		registerPage.setUrl("/chatroom");
+		registerPage.setModelCreator(new ChatroomModelCreator());
+		registerPage.setController(new ChatroomController());
+		registerPage.setJsp("/jsp/public_chat.jsp");
+
+		mapping.put(chatroomPage.getUrl(), chatroomPage);
 	}
 
 	public void destroy() {

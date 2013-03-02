@@ -14,6 +14,7 @@ public class StartupListener implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent arg0) {
+		HibernateUtil.getSessionFactory();
 	}
 
 	public void contextDestroyed(ServletContextEvent arg0) {
