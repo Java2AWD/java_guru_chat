@@ -32,17 +32,17 @@ public class LoginFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
-			Object user = req.getSession().getAttribute("user");
+			Integer userid = (Integer) req.getSession().getAttribute("userid");
 			if (!url.matches("/login") && !url.matches("/register")) {
-				if (user == null) {
+				if (userid == null) {
 					// optionally, you may like to check if that attribute has a
 					// valid userId as well
 					resp.sendRedirect("login");
 					return;
 				}
 			} else {
-				System.out.println(user);
-				if (user == null) {
+				System.out.println(userid + " in login filter");
+				if (userid == null) {
 					chain.doFilter(request, response);
 					return;
 				} else {

@@ -34,7 +34,7 @@ public class LoginController implements Controller {
 					if (user != null) {
 						loginModel.addWarning("logged", "Logged");
 						HttpSession userSession = request.getSession();
-						userSession.setAttribute("user", user);
+						userSession.setAttribute("userid", user.getId());
 					} else {
 						loginModel.addWarning("error", "Invalid username or password");
 					}

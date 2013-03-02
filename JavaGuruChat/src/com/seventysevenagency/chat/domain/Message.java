@@ -1,10 +1,13 @@
 package com.seventysevenagency.chat.domain;
 
+import java.sql.Date;
+
 public class Message {
 	private int id;
 	private int conversationId;
 	private User user;
 	private String text;
+	private Date date;
 
 	public User getUser() {
 		return user;
@@ -36,6 +39,14 @@ public class Message {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

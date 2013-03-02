@@ -59,10 +59,10 @@ public class MappingFilter implements Filter {
 		
 		//Public chat page mapping
 		UrlMapping chatroomPage = new UrlMapping();
-		registerPage.setUrl("/chatroom");
-		registerPage.setModelCreator(new ChatroomModelCreator());
-		registerPage.setController(new ChatroomController());
-		registerPage.setJsp("/jsp/public_chat.jsp");
+		chatroomPage.setUrl("/chatroom");
+		chatroomPage.setModelCreator(new ChatroomModelCreator());
+		chatroomPage.setController(new ChatroomController());
+		chatroomPage.setJsp("/jsp/public_chat.jsp");
 
 		mapping.put(chatroomPage.getUrl(), chatroomPage);
 	}
@@ -76,7 +76,7 @@ public class MappingFilter implements Filter {
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
 			UrlMapping urlMapping = mapping.get(url);		
-			
+			System.out.print(url);
 			if (urlMapping == null) {
 				RequestDispatcher view = req
 						.getRequestDispatcher("/jsp/404.jsp");

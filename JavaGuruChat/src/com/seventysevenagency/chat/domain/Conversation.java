@@ -3,14 +3,14 @@ package com.seventysevenagency.chat.domain;
 import com.seventysevenagency.chat.types.ConversationType.Type;
 
 public class Conversation {	
-	private Long id;
+	private int id;
 	private Type type;
 	private String name;
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long mId) {
-		this.id = mId;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public Type getType() {
 		return type;

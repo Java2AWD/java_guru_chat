@@ -19,4 +19,7 @@ public interface MessageDAO {
 
 	public List<Message> findByConversation(Conversation conversation)
 			throws DAOException;
+	
+	public List<Message> findByConversationId(int conversationId)
+			throws DAOException;
 }

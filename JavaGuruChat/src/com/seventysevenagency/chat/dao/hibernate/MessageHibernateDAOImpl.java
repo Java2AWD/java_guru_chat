@@ -58,7 +58,7 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> findByUser(User user) throws DAOException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		List<Message> list = null;
 		try {
 			String hql = "FROM Message WHERE user_id = :user_id";
@@ -73,15 +73,21 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> findByConversation(Conversation conversation)
+			throws DAOException {
+		return findByConversationId(conversation.getId());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Message> findByConversationId(int conversationId)
 			throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		List<Message> result = null;
 		Query query = session
-				.createQuery("FROM messages WHERE conversation_id = :id");
-		query.setParameter("id", conversation.getId());
+				.createQuery("FROM Message WHERE conversation_id = :id");
+		query.setParameter("id", conversationId);
 		try {
 			result = query.list();
 		} catch (Exception e) {
