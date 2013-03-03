@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.MessageDAO;
 import com.seventysevenagency.chat.dao.UserDAO;
@@ -19,7 +17,6 @@ import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.mvc.models.ChatroomModel;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.util.ConnectedUsersListener;
-import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class ChatroomController implements Controller {
 
@@ -30,11 +27,7 @@ public class ChatroomController implements Controller {
 		ChatroomModel chatroomModel = (ChatroomModel) model;
 
 		UserDAO userDao = new UserHibernateDAOImpl();
-		MessageDAO messageDao = new MessageHibernateDAOImpl();
-
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
+		MessageDAO messageDao = new MessageHibernateDAOImpl();		
 		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
 			HttpSession userSession = request.getSession();
 			int userId = (int) userSession.getAttribute("userid");
@@ -43,9 +36,7 @@ public class ChatroomController implements Controller {
 				User activeUser = userDao.findById(userId);
 				Set<Message> messages = activeUser.getMessages();
 				messages.add(chatroomModel.getMessage());
-				session.getTransaction().commit();
 			} catch (DAOException e) {
-				session.getTransaction().rollback();
 				chatroomModel.addWarning("error", "Error sending message");
 				e.printStackTrace();
 			}
@@ -54,15 +45,14 @@ public class ChatroomController implements Controller {
 			userSession.removeAttribute("userid");
 			return;
 		}
-
 		// Filling model with messages and active users to display
 		try {
 			List<Message> messageList = messageDao
 					.findByConversationId(chatroomModel.getConversationId());
 			List<User> usersList = new ArrayList<User>();
-
 			Integer[] userIds = ConnectedUsersListener.getActiveUsers();
 			for (Integer userId : userIds) {
+				System.out.println(userId);System.out.println("WTF");
 				usersList.add(userDao.findById(userId));
 			}
 
@@ -72,7 +62,6 @@ public class ChatroomController implements Controller {
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public boolean validateModel(ChatroomModel chatroomModel) {

@@ -2,14 +2,11 @@ package com.seventysevenagency.chat.mvc.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.Session;
-
 import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.dao.UserDAO;
 import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.RegisterModel;
-import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class RegisterController implements Controller {
 
@@ -22,24 +19,19 @@ public class RegisterController implements Controller {
 		if (requestMethod.equals("POST")) {
 			// validation new user data and saving to db
 			if (validateModel(registerModel)) {
-				Session session = HibernateUtil.getSessionFactory()
-						.getCurrentSession();
-				session.beginTransaction();
+
 				UserDAO userDao = new UserHibernateDAOImpl();
 				try {
 					userDao.create(registerModel.user);
 				} catch (DAOException e) {
-					session.getTransaction().rollback();
 					e.printStackTrace();
 					registerModel.addWarning("create",
 							"Failed to create a user");
 				}
-				session.getTransaction().commit();
 			}
 		} else {
 			// Get request
 		}
-
 	}
 
 	public boolean validateModel(RegisterModel model) {

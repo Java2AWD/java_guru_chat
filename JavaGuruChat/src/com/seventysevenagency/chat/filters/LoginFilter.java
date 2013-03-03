@@ -11,6 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+
+import com.seventysevenagency.chat.util.HibernateUtil;
+
 /**
  * Servlet Filter implementation class LoginFilter
  */
@@ -27,7 +31,8 @@ public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");

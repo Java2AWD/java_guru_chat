@@ -14,6 +14,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+
 import com.seventysevenagency.chat.mvc.controllers.ChatroomController;
 import com.seventysevenagency.chat.mvc.controllers.Controller;
 import com.seventysevenagency.chat.mvc.controllers.LoginController;
@@ -24,6 +26,7 @@ import com.seventysevenagency.chat.mvc.modelcreators.LoginModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.RegisterModelCreator;
 import com.seventysevenagency.chat.mvc.models.IModel;
+import com.seventysevenagency.chat.util.HibernateUtil;
 
 /**
  * Servlet Filter implementation class MappingFilter
@@ -38,8 +41,8 @@ public class MappingFilter implements Filter {
 	 */
 	public MappingFilter() {
 		mapping = new HashMap<String, UrlMapping>();
-		
-		//Login page mapping
+
+		// Login page mapping
 		UrlMapping loginPage = new UrlMapping();
 		loginPage.setUrl("/login");
 		loginPage.setModelCreator(new LoginModelCreator());
@@ -48,7 +51,7 @@ public class MappingFilter implements Filter {
 
 		mapping.put(loginPage.getUrl(), loginPage);
 
-		//Register page mapping
+		// Register page mapping
 		UrlMapping registerPage = new UrlMapping();
 		registerPage.setUrl("/register");
 		registerPage.setModelCreator(new RegisterModelCreator());
@@ -56,8 +59,8 @@ public class MappingFilter implements Filter {
 		registerPage.setJsp("/jsp/register.jsp");
 
 		mapping.put(registerPage.getUrl(), registerPage);
-		
-		//Public chat page mapping
+
+		// Public chat page mapping
 		UrlMapping chatroomPage = new UrlMapping();
 		chatroomPage.setUrl("/chatroom");
 		chatroomPage.setModelCreator(new ChatroomModelCreator());
@@ -73,10 +76,12 @@ public class MappingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");
+
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
-			UrlMapping urlMapping = mapping.get(url);		
-			System.out.print(url);
+			UrlMapping urlMapping = mapping.get(url);
+			
 			if (urlMapping == null) {
 				RequestDispatcher view = req
 						.getRequestDispatcher("/jsp/404.jsp");
@@ -95,6 +100,7 @@ public class MappingFilter implements Filter {
 		} else {
 			chain.doFilter(request, response);
 		}
+		session.getTransaction().commit();
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

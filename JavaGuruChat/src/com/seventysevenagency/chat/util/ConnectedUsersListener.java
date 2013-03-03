@@ -38,6 +38,9 @@ public class ConnectedUsersListener implements HttpSessionListener {
 	}
 
 	public static Integer[] getActiveUsers() {
+		for (Integer int1 : userInfo) {
+			System.out.println(int1);
+		}
 		Integer[] usernameArray = new Integer[userInfo.size()];
 		return userInfo.toArray(usernameArray);
 	}
