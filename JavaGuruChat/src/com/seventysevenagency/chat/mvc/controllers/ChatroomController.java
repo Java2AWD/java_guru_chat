@@ -18,11 +18,11 @@ import com.seventysevenagency.chat.mvc.models.ChatroomModel;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.util.ConnectedUsersListener;
 
-public class ChatroomController implements Controller {
+public class ChatroomController extends ControllerBase {
 
 	@Override
 	public void execute(IModel model, HttpServletRequest request) {
-
+		
 		String requestMethod = request.getMethod();
 		ChatroomModel chatroomModel = (ChatroomModel) model;
 
@@ -37,6 +37,8 @@ public class ChatroomController implements Controller {
 				Set<Message> messages = activeUser.getMessages();
 				Message msg =  chatroomModel.getMessage();
 				msg.setUser(activeUser);
+				long unixTime = System.currentTimeMillis()/1000L;
+				msg.setDate(unixTime);
 				messages.add(msg);
 				userDao.flushChanges();
 			} catch (DAOException e) {
@@ -55,8 +57,7 @@ public class ChatroomController implements Controller {
 			List<User> usersList = new ArrayList<User>();
 			Integer[] userIds = ConnectedUsersListener.getActiveUsers();
 			for (Integer userId : userIds) {
-//				System.out.println(userId);System.out.println("WTF");
-//				usersList.add(userDao.findById(userId));
+				usersList.add(userDao.findById(userId));
 			}
 
 			chatroomModel.setMessageList(messageList);

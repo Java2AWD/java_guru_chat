@@ -8,11 +8,11 @@ import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.RegisterModel;
 
-public class RegisterController implements Controller {
+public class RegisterController extends ControllerBase {
 
 	@Override
 	public void execute(IModel model, HttpServletRequest request) {
-
+		this.redirectUrl = null;
 		RegisterModel registerModel = (RegisterModel) model;
 		String requestMethod = request.getMethod();
 
@@ -23,6 +23,7 @@ public class RegisterController implements Controller {
 				UserDAO userDao = new UserHibernateDAOImpl();
 				try {
 					userDao.create(registerModel.user);
+					this.redirectUrl = "login";
 				} catch (DAOException e) {
 					e.printStackTrace();
 					registerModel.addWarning("error",

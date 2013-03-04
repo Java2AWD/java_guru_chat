@@ -18,7 +18,7 @@
 			<column name="text" />
 		</property>
 
-		<property name="date" type="java.sql.Date" access="field">
+		<property name="date" type="long" access="field">
 			<column name="date" />
 		</property>
 

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 
 import com.seventysevenagency.chat.mvc.controllers.ChatroomController;
-import com.seventysevenagency.chat.mvc.controllers.Controller;
+import com.seventysevenagency.chat.mvc.controllers.IController;
 import com.seventysevenagency.chat.mvc.controllers.LoginController;
 import com.seventysevenagency.chat.mvc.controllers.RegisterController;
 import com.seventysevenagency.chat.mvc.mapping.UrlMapping;
@@ -28,6 +28,7 @@ import com.seventysevenagency.chat.mvc.modelcreators.LoginModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.RegisterModelCreator;
 import com.seventysevenagency.chat.mvc.models.IModel;
+import com.seventysevenagency.chat.util.ConnectedUsersListener;
 import com.seventysevenagency.chat.util.HibernateUtil;
 
 /**
@@ -84,7 +85,9 @@ public class MappingFilter implements Filter {
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
 			if(url.equals("/logout")){
 				HttpSession userSession = req.getSession();
+				Integer userID = (Integer) userSession.getAttribute("userid");
 				userSession.removeAttribute("userid");
+				ConnectedUsersListener.removeUser(userID);
 				resp.sendRedirect("login");
 				return;
 			}
@@ -100,8 +103,15 @@ public class MappingFilter implements Filter {
 				ModelCreator modelCreator = urlMapping.getModelCreator();
 				IModel model = modelCreator.createModel(req);
 
-				Controller controller = urlMapping.getController();
+				IController controller = urlMapping.getController();
 				controller.execute(model, req);
+				String redirectUrl = controller.getRedirectUrl();
+				if(redirectUrl != null) {
+					System.out.println(redirectUrl);
+					resp.sendRedirect(redirectUrl);
+					session.getTransaction().commit();
+					return;
+				}
 				req.setAttribute("model", model);
 				req.setAttribute("title", "page");
 				RequestDispatcher view = req.getRequestDispatcher(urlMapping

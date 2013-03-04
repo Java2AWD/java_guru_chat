@@ -1,12 +1,12 @@
 package com.seventysevenagency.chat.mvc.mapping;
 
-import com.seventysevenagency.chat.mvc.controllers.Controller;
+import com.seventysevenagency.chat.mvc.controllers.IController;
 import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 
 public class UrlMapping {
 
 	private ModelCreator modelCreator;
-	private Controller controller;
+	private IController controller;
 	private String jsp;
 	private String url;
 
@@ -18,11 +18,11 @@ public class UrlMapping {
 		this.modelCreator = modelCreator;
 	}
 
-	public Controller getController() {
+	public IController getController() {
 		return controller;
 	}
 
-	public void setController(Controller controller) {
+	public void setController(IController controller) {
 		this.controller = controller;
 	}
 

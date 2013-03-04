@@ -9,12 +9,12 @@ import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.LoginModel;
+import com.seventysevenagency.chat.util.ConnectedUsersListener;
 
-public class LoginController implements Controller {
-
+public class LoginController extends ControllerBase{
 	@Override
 	public void execute(IModel model, HttpServletRequest request) {
-	
+		this.redirectUrl = null;
 		LoginModel loginModel = (LoginModel) model;
 		String username = loginModel.getUsername();
 		String password = loginModel.getPassword();
@@ -28,7 +28,10 @@ public class LoginController implements Controller {
 					if (user != null) {
 						loginModel.addWarning("logged", "Logged");
 						HttpSession userSession = request.getSession();
-						userSession.setAttribute("userid", user.getId());
+						Integer userID = user.getId();
+						userSession.setAttribute("userid", userID);
+						ConnectedUsersListener.addUser(userID);
+						this.redirectUrl = "chatroom";
 					} else {
 						loginModel.addWarning("error", "Invalid username or password");
 					}
@@ -39,5 +42,4 @@ public class LoginController implements Controller {
 			}
 		}
 	}
-
 }
