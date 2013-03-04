@@ -1,53 +1,83 @@
 <jsp:include page="/jsp/header.jsp" />
 </head>
+<%@ page import="com.seventysevenagency.chat.mvc.models.RegisterModel"%>
 <body>
 	<div class="container">
-		<h1>Register</h1>
-		<form name="register" method="post">
-			<div>
-				<label for="username">Username:</label> <input type="text"
-					name="username" id="username"
-					value="<%=(request.getAttribute("username") == null) ? "" : request
-					.getAttribute("username")%>" />
+		<legend>
+			<h1 class="register-header">Register</h1>
+		</legend>
+		<%
+			RegisterModel model = (RegisterModel) request.getAttribute("model");
+		%>
+		<form class="form-horizontal" name="register" method="post">
+			<div class="control-group">
+				<label class="control-label" for="inputUsername">Username</label>
+				<div class="controls">
+					<input type="text" id="inputUsername"
+						value="<%=(model.user.getUsername() != null) ? model.user
+					.getUsername() : ""%>"
+						name="username" placeholder="Username">
+				</div>
 			</div>
-			<div>
-				<label for="password">Password:</label> <input type="password"
-					name="password" id="password" />
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password</label>
+				<div class="controls">
+					<input type="password" id="inputPassword" name="password"
+						placeholder="Password">
+				</div>
 			</div>
-			<div>
-				<label for="repassword">Repeat password:</label> <input
-					type="password" name="repassword" id="repassword" />
+			<div class="control-group">
+				<label class="control-label" for="inputPassword2">Repeat
+					password</label>
+				<div class="controls">
+					<input type="password" id="inputPassword2" name="repassword"
+						placeholder="Password">
+				</div>
 			</div>
-			<div>
-				<label for="name">Name:</label> <input type="text" name="name"
-					id="name"
-					value="<%=(request.getAttribute("name") == null) ? "" : request
-					.getAttribute("name")%>" />
+
+			<div class="control-group">
+				<label class="control-label" for="inputName">Name:</label>
+				<div class="controls">
+					<input type="text" name="name" id="inputName"
+						value="<%=(model.user.getName() != null) ? model.user
+					.getName() : ""%>" placeholder="Name"/>
+				</div>
 			</div>
-			<div>
-				<label for="surname">Surname:</label> <input type="text"
-					name="surname" id="surname"
-					value="<%=(request.getAttribute("surname") == null) ? "" : request
-					.getAttribute("surname")%>" />
+			<div class="control-group">
+				<label class="control-label" for="inputSurname">Surname:</label>
+				<div class="controls">
+					<input type="text" name="surname" id="inputSurname"
+						value="<%=(model.user.getSurname() != null) ? model.user
+					.getSurname() : ""%>" placeholder="Surname"/>
+				</div>
 			</div>
-			<div>
-				<label for="email">Email:</label> <input type="text" name="email"
-					id="email"
-					value="<%=(request.getAttribute("email") == null) ? "" : request
-					.getAttribute("email")%>" />
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Email:</label>
+				<div class="controls">
+					<input type="text" name="email" id="inputEmail"
+						value="<%=(model.user.getEmail() != null) ? model.user
+					.getEmail() : ""%>" placeholder="email"/>
+				</div>
 			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button type="submit" name="submit" class="btn">Register</button>
+				</div>
+			</div>
+
 			<%
-				String cerror = (String) request.getAttribute("error");
-				if (cerror != null) {
+				String error = model.getWarning("error");
+				if (error != null) {
 			%>
-			<div class="error">
-				<%=cerror%>
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Warning!</strong>
+				<%=error%>
 			</div>
+
 			<%
 				}
 			%>
-
-			<input type="submit" name="submit" value="Register" />
 		</form>
 		<a href="login">Login</a>
 	</div>

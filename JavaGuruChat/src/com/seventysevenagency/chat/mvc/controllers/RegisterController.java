@@ -25,7 +25,7 @@ public class RegisterController implements Controller {
 					userDao.create(registerModel.user);
 				} catch (DAOException e) {
 					e.printStackTrace();
-					registerModel.addWarning("create",
+					registerModel.addWarning("error",
 							"Failed to create a user");
 				}
 			}
@@ -40,22 +40,22 @@ public class RegisterController implements Controller {
 
 		String username = model.user.getUsername();
 		if (username == null || username.isEmpty()) {
-			model.addWarning("username", "Username is empty");
+			model.addWarning("error", "Username is empty");
 			isValid = false;
 		}
 
 		String password = model.user.getPassword();
 		if (password == null || password.isEmpty()) {
-			model.addWarning("password", "Password is empty");
+			model.addWarning("error", "Password is empty");
 			isValid = false;
 		} else if (password.length() < 4) {
-			model.addWarning("password", "Password is too short");
+			model.addWarning("error", "Password is too short");
 			isValid = false;
 		}
 
 		String name = model.user.getName();
 		if (name == null || name.isEmpty()) {
-			model.addWarning("name", "Please, provide your name...");
+			model.addWarning("error", "Please, provide your name...");
 			isValid = false;
 		}
 		return isValid;

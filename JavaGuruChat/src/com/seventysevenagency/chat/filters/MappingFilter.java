@@ -13,6 +13,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 
@@ -76,10 +78,18 @@ public class MappingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		HttpServletResponse resp = (HttpServletResponse) response;		
 		String url = req.getRequestURI().replace("/JavaGuruChat", "");
 
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
+			if(url.equals("/logout")){
+				HttpSession userSession = req.getSession();
+				userSession.removeAttribute("userid");
+				resp.sendRedirect("login");
+				return;
+			}
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
 			UrlMapping urlMapping = mapping.get(url);
 			
 			if (urlMapping == null) {
@@ -93,14 +103,16 @@ public class MappingFilter implements Filter {
 				Controller controller = urlMapping.getController();
 				controller.execute(model, req);
 				req.setAttribute("model", model);
+				req.setAttribute("title", "page");
 				RequestDispatcher view = req.getRequestDispatcher(urlMapping
 						.getJsp());
 				view.forward(req, response);
 			}
+			session.getTransaction().commit();
 		} else {
 			chain.doFilter(request, response);
 		}
-		session.getTransaction().commit();
+		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
