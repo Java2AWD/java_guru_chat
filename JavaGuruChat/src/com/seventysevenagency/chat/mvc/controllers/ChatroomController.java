@@ -35,7 +35,10 @@ public class ChatroomController implements Controller {
 			try {
 				User activeUser = userDao.findById(userId);
 				Set<Message> messages = activeUser.getMessages();
-				messages.add(chatroomModel.getMessage());
+				Message msg =  chatroomModel.getMessage();
+				msg.setUser(activeUser);
+				messages.add(msg);
+				userDao.flushChanges();
 			} catch (DAOException e) {
 				chatroomModel.addWarning("error", "Error sending message");
 				e.printStackTrace();
@@ -52,8 +55,8 @@ public class ChatroomController implements Controller {
 			List<User> usersList = new ArrayList<User>();
 			Integer[] userIds = ConnectedUsersListener.getActiveUsers();
 			for (Integer userId : userIds) {
-				System.out.println(userId);System.out.println("WTF");
-				usersList.add(userDao.findById(userId));
+//				System.out.println(userId);System.out.println("WTF");
+//				usersList.add(userDao.findById(userId));
 			}
 
 			chatroomModel.setMessageList(messageList);

@@ -20,11 +20,11 @@ public class TestEntryPoint {
 		UserDAO userDao = new UserHibernateDAOImpl();
 		User newUser;
 		try {
-			newUser = (User) userDao.findById(11);			
+			newUser = (User) userDao.findById(23);			
 			Set<Message> messages = newUser.getMessages();	
-			messages.add(new Message());
-			messages.add(new Message());
-			session.update(newUser);
+			Message msg = new Message();
+			msg.setText("Hi1");
+			messages.add(msg);
 			session.getTransaction().commit();
 		} catch (DAOException e) {
 			e.printStackTrace();

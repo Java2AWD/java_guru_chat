@@ -14,4 +14,6 @@ public interface UserDAO {
 	public User findByUsername(String username) throws DAOException;
 	
 	public User authorize(String username, String password) throws DAOException;
+	
+	public void flushChanges();
 }

@@ -1,5 +1,6 @@
 package com.seventysevenagency.chat.dao.hibernate;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -92,5 +93,13 @@ public class UserHibernateDAOImpl implements UserDAO {
 		}
 		return user;
 	}
-
+	
+	public void flushChanges() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		FlushMode flushMode = session.getFlushMode();
+		session.setFlushMode(FlushMode.ALWAYS);
+		session.flush();
+		session.setFlushMode(flushMode);
+	}
+	
 }
