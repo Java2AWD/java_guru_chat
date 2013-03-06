@@ -88,5 +88,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/easybeans-core-1.0.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsf-impl-1.2-b19.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.apache.servicemix.bundles.cglib-2.1_3-1.0-m3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
